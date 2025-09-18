@@ -39,8 +39,8 @@ async function addEvent(page, { eventName, description, startDate, endDate, allD
     // await categoryOption.click();
 
     // Calendar
-    await page.getByRole('button', { name: '2nd Calendar', exact: true }).click();
-    await page.getByRole('menuitem', { name: '2nd Calendar' }).click();
+    await page.getByRole('button', { name: '2nd Test Calendar', exact: true }).click();
+    await page.getByRole('menuitem', { name: '2nd Test Calendar' }).click();
 
     // Guests
     await page.getByText('Add guestsGuests').click();
