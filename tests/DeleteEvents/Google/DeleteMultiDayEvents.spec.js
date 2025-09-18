@@ -8,8 +8,12 @@ test('Delete Events', async ({ page }) => {
     await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
     await page.locator('.offcanvas-backdrop').click();
     await page.waitForTimeout(5000);
-    await page.getByLabel('E-20250107', { exact: true }).click();
-    await page.getByRole('button', { name: 'January 7 to 9 Jan 7 - 9, All Day' }).click();
+    const calendarEvent = page.locator('#E-20250904');
+    await expect(calendarEvent).toBeVisible({ timeout: 10000 });
+    await calendarEvent.click();
+    await page.getByRole('button', { name: 'Nice Nice Sep 4 - 10, All' }, { timeout: 30000 }).first().click();
     await page.getByRole('button').filter({ hasText: /^Loading\.\.\.$/ }).nth(3).click();
     await page.getByRole('button', { name: 'Delete Event' }).click();
+    // Assert success message
+    await expect(page.getByText('Event deleted successfully')).toBeVisible({ timeout: 10000 });
 });

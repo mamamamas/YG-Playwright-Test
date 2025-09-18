@@ -1,58 +1,68 @@
-// import { test, expect } from '@playwright/test';
-// import dotenv from 'dotenv';
-// dotenv.config();
-// // test.beforeEach(async ({ page }) => {
-// //     await page.goto("https://app.yearglance.com/")
-// //     await page.locator('input[name="b8397a97-e4e6-4b7d-8c90-87498c714e80"]').check();
-// //     await page.locator('.offcanvas-backdrop').click();
-// // })
-// test('Edit', async ({ page }) => {
-//     await page.locator('#E-20250223').click();
-//     await page.getByRole('button', { name: 'New Name Feb 18 - 25, All Day' }).click();
-//     await page.getByRole('button').filter({ hasText: /^Loading\.\.\.$/ }).nth(2).click();
-//     await page.getByRole('textbox', { name: 'Name' }).click();
-//     await page.getByRole('textbox', { name: 'Name' }).fill('');
-//     await page.getByRole('textbox', { name: 'Name' }).fill('New 2Name');
-//     await page.locator('.has-icon').first().click();
-//     await page.getByRole('option', { name: 'Choose Tuesday, February 18th,' }).click();
-//     await page.locator('div:nth-child(3) > .react-datepicker-wrapper > .react-datepicker__input-container > .has-icon').click();
-//     await page.getByRole('option', { name: 'Choose Tuesday, February 25th,' }).click();
-//     await page.getByRole('button', { name: 'Update Event' }).click();
-// });
-// // await expect(page.locator('#body-container')).toContainText('Connect and sync calendar to view events.');
-// async function validateEvent(page, { eventName, description, numDay, newName }) {
-//     // Wait until the event appears
-//     // await page.getByRole('button', { name: `${numDay} ${eventName}` }).first().click();
-//     await page.waitForTimeout(5000);
-//     await page.locator('#E-20250112').click();
-//     await page.getByRole('button', { name: `${eventName} Jan 13 - 25, All Day` }).click();
-//     await page.waitForTimeout(5000);
-//     await page.locator('#view-event-modal').getByRole('button').filter({ hasText: 'Loading...' }).first().click();
-//     await page.locator('.has-icon').first().click();
-//     await page.getByRole('option', { name: 'Choose Monday, January 13th,' }).click();
-//     await page.locator('div:nth-child(3) > .react-datepicker-wrapper > .react-datepicker__input-container > .has-icon').click();
-//     await page.getByRole('option', { name: 'Choose Saturday, January 25th,' }).click();
-//     await page.getByRole('textbox', { name: 'Name' }).click();
-//     await page.getByRole('textbox', { name: 'Name' }).fill('');
-//     await page.getByRole('textbox', { name: 'Name' }).fill(newName);
-//     await page.getByRole('button', { name: 'Update Event' }).click();
-//     // Validate data inside the event details
-//     await expect(page.getByRole('textbox', { name: 'Name' })).toHaveValue(newName);
-//     // await expect(page.getByRole('textbox', { name: 'Description' })).toHaveValue(description);
-// }
+import { test, expect } from '@playwright/test';
+import dotenv from 'dotenv';
+dotenv.config();
 
-// test.only("Add and validate event", async ({ page }) => {
-//     await page.goto(process.env.API_URL);
-//     await page.locator('.offcanvas-backdrop').click();
+async function EditEvent(page, { eventName, description, newName, startDate, endDate, allDay, repeat }) {
+    const calendarEvent = page.locator('#E-20250904'); // <-- adjust locator if eventId changes
+    await expect(calendarEvent).toBeVisible({ timeout: 10000 });
+    await calendarEvent.click();
+    await page.waitForTimeout(10000);
+    // Open event details
+    await page.getByRole('button', { name: `${eventName} Sep 4 - 5, All` }, { timeout: 10000 }).first().click();
+    await page.waitForTimeout(1000);
 
-//     const eventData = {
-//         eventName: "sass",
-//         newName: "samplep23 - 45",
-//         description: "Automating testing",
-//         startDate: "Thursday, September 4th,",
-//         endDate: "Friday, September 5th,",
-//         numDay: "4",
-//         allDay: true,
-//     };
-//     await validateEvent(page, eventData);
-// });
+    // Edit event name
+    await page.locator('#view-event-modal').getByRole('button').filter({ hasText: 'Loading...' }).first().click();
+    await page.getByRole('textbox', { name: 'Name' }).fill('');
+    await page.getByRole('textbox', { name: 'Name' }).fill(newName);
+
+    // All Day
+    if (allDay) {
+        await page.getByRole('checkbox', { name: 'All Day' }).check();
+    }
+
+    // Start Date
+    await page.locator('.has-icon').first().click();
+    await page.getByRole('option', { name: `Choose ${startDate}` }).click();
+
+    // End Date
+    await page.locator('div:nth-child(3) > .react-datepicker-wrapper > .react-datepicker__input-container > .has-icon').click();
+    await page.getByRole('option', { name: `Choose ${endDate}` }).click();
+
+    // Description
+    await page.getByRole('textbox', { name: 'Description' }).fill(description);
+
+    // Update Event
+    await page.getByRole('button', { name: 'Update Event' }).click();
+
+    // Assert success
+    await expect(page.getByText('Event updated successfully')).toBeVisible();
+}
+
+// Reusable setup
+test.beforeEach(async ({ page }) => {
+    await page.goto(process.env.API_URL);
+    await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+    await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+    await page.locator('.offcanvas-backdrop').click();
+    await page.waitForTimeout(4000);
+});
+
+// Parameterized tests
+const repeats = ["Daily", "Weekly", "Monthly", "Annually"];
+
+for (const repeat of repeats) {
+    test(`Edit ${repeat} Event and validate event`, async ({ page }) => {
+        const eventData = {
+            eventName: `${repeat} Repeat`,   // Event name before edit
+            newName: `Edited ${repeat} Event`, // Event name after edit
+            description: "Updated description",
+            startDate: "Thursday, September 4th,",
+            endDate: "Friday, September 5th,",
+            allDay: true,
+            repeat,
+        };
+
+        await EditEvent(page, eventData);
+    });
+}
