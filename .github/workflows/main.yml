@@ -17,8 +17,8 @@ jobs:
       MICROSOFT_CALENDAR: ${{ secrets.MICROSOFT_CALENDAR }}
       GOOGLE_EMAIL: ${{ secrets.GOOGLE_EMAIL }}
       GOOGLE_PASSWORD: ${{ secrets.GOOGLE_PASSWORD }}
-      LOGIN_EMAIL: ${{ secrets.EMAIL_LOGIN }}
-      LOGIN_PASSWORD: ${{ secrets.PASSWORD }}
+      EMAIL_LOGIN: ${{ secrets.EMAIL_LOGIN }}
+      PASSWORD: ${{ secrets.PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
