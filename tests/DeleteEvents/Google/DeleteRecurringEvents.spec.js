@@ -4,6 +4,8 @@ dotenv.config();
 
 test('Delete Events', async ({ page }) => {
     await page.goto(process.env.API_URL);
+    await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+    await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
     await page.locator('.offcanvas-backdrop').click();
     await page.waitForTimeout(5000);
     await page.getByLabel('E-20250107', { exact: true }).click();

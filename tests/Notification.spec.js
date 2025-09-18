@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 test('Notification', async ({ page, context }) => {
     // Admin Login
-    await page.goto('https://admin-staging-v2.yearglance.com/auth/login');
+    await page.goto(process.env.API_URL);
     await page.getByRole('textbox', { name: 'Email' }).fill('hello@jlabs.team');
     await page.getByRole('textbox', { name: 'Password' }).fill('123456');
     await page.getByRole('button', { name: 'Sign In' }).click();

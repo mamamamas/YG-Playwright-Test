@@ -64,11 +64,8 @@ async function addEvent(page, { eventName, description, startDate, endDate, allD
 // Reusable test setup
 test.beforeEach(async ({ page }) => {
     await page.goto(process.env.API_URL);
-    // Google Calendar 2nd Test Calendar
-    await page.locator('input[name="9bfbeee1-e10c-4ba5-a001-a5720875ef0d"]').check();
-
-    // Microsoft Calendar 2n Calendar
-    await page.locator('input[name="21364cd0-7877-4edf-9728-b5ea23200212"]').uncheck();
+    await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+    await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
     await page.locator('.offcanvas-backdrop').click();
 });
 
