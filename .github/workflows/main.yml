@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     env: # ✅ Inject secrets into process.env
       API_URL: ${{ secrets.API_URL }}
+      LOGIN_URL: ${{ secrets.LOGIN_URL }}
+      REGISTER_URL: ${{ secrets.REGISTER_URL }}
+      GOOGLE_CALENDAR: ${{ secrets.GOOGLE_CALENDAR }}
+      MICROSOFT_CALENDAR: ${{ secrets.MICROSOFT_CALENDAR }}
+      GOOGLE_EMAIL: ${{ secrets.GOOGLE_EMAIL }}
+      GOOGLE_PASSWORD: ${{ secrets.GOOGLE_PASSWORD }}
       LOGIN_EMAIL: ${{ secrets.EMAIL_LOGIN }}
       LOGIN_PASSWORD: ${{ secrets.PASSWORD }}
     steps:
