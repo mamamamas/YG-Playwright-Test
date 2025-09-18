@@ -87,7 +87,7 @@ test("Add event", async ({ page }) => {
     await addEvent(page, eventData);
 });
 
-test.only("Validate existing event", async ({ page }) => {
+test("Validate existing event", async ({ page }) => {
     await page.goto(process.env.API_URL);
 
     // Enable Google Calendar, disable Microsoft Calendar
