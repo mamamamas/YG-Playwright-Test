@@ -22,7 +22,7 @@ test('Print', async ({ page }) => {
     await page.getByRole('button', { name: 'Apply & Print' }).click();
 });
 
-test.only('Print about', async ({ browser }) => {
+test('Print about', async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
     await page.getByRole('button', { name: 'Print' }).click();
