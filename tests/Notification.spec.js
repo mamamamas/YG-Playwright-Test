@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 dotenv.config();
-test.only('Notification', async ({ page, context }) => {
+test('Notification', async ({ page, context }) => {
     // Admin Login
     await page.goto('https://admin-staging-v2.yearglance.com/auth/login');
     await page.getByRole('textbox', { name: 'Email' }).fill('hello@jlabs.team');

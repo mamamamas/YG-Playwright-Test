@@ -1,4 +1,4 @@
-import { expect, test as setup } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import dotenv from 'dotenv';
 dotenv.config();
 

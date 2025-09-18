@@ -22,7 +22,7 @@ test("Customisation Current Month", async ({ page }) => {
     await page.waitForTimeout(5000);
 })
 
-test.only("Customisation Start Month", async ({ page }) => {
+test("Customisation Start Month", async ({ page }) => {
     await page.getByRole('button', { name: 'Customise' }).click();
     await page.getByRole('button', { name: 'September' }).click();
     await page.getByRole('menuitem', { name: 'September' }).click();
