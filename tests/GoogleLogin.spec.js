@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
-
+import dotenv from 'dotenv';
+dotenv.config();
 test('Login with Google', async ({ page, context }) => {
-  await page.goto('https://staging-v2.yearglance.com/auth/login');
+  await page.goto(process.env.API_URL);
 
   // Wait for popup
   const popupPromise = context.waitForEvent('page');
@@ -9,9 +10,9 @@ test('Login with Google', async ({ page, context }) => {
   const popup = await popupPromise;
 
   // Login on Google popup
-  await popup.getByRole('textbox', { name: 'Email or phone' }).fill('mcdurana@jlabs.team');
+  await popup.getByRole('textbox', { name: 'Email or phone' }).fill(process.env.GOOGLE_EMAIL);
   await popup.getByRole('button', { name: 'Next' }).click();
-  await popup.getByRole('textbox', { name: 'Enter your password' }).fill('M@ky12345');
+  await popup.getByRole('textbox', { name: 'Enter your password' }).fill(process.env.PASSWORD);
   await popup.getByRole('button', { name: 'Next' }).click();
   await popup.getByRole('button', { name: 'Continue' }).click();
   await popup.getByRole('button', { name: 'Continue' }).click();
