@@ -72,10 +72,6 @@ async function validateEvent(page, { eventName, description }) {
 
 test("Add event", async ({ page }) => {
     await page.goto(process.env.API_URL);
-
-    // Enable Google Calendar, disable Microsoft Calendar
-    await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-    await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
     await page.locator('.offcanvas-backdrop').click();
 
     const eventData = {
