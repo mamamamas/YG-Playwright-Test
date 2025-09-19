@@ -12,6 +12,6 @@ test("Switch views", async ({ page }) => {
     await page.getByRole('menuitem', { name: 'Month' }).click();
     await page.getByRole('button', { name: 'Month', exact: true }).click();
     await page.getByRole('menuitem', { name: 'Week' }).click();
-    await page.getByRole('button', { name: 'Week' }).click();
+    await page.getByRole('button', { name: 'Week' }).first().click();
     await page.getByRole('menuitem', { name: 'Agenda' }).click();
 })

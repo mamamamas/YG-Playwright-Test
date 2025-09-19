@@ -14,8 +14,9 @@ test('Share Calendar', async ({ page, context }) => {
     await page.getByRole('checkbox', { name: 'Year - Vertical' }).check();
     await page.getByRole('checkbox', { name: 'Day' }).check();
     await page.locator('div').filter({ hasText: /^LinkCopy$/ }).getByRole('button').click();
-    await page.getByText('Copied to clipboard.').click();
-
+    const ClipBoard = page.getByText('Copied to clipboard.')
+    await expect(ClipBoard).toBeVisible()
+    await ClipBoard.click()
     // Create a new page from the context
     const page1 = await context.newPage();
     await page1.goto(

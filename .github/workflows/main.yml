@@ -1,4 +1,5 @@
 name: YG Playwright Tests
+
 on:
   push:
     branches: [ main, master ]
@@ -19,20 +20,70 @@ jobs:
       GOOGLE_PASSWORD: ${{ secrets.GOOGLE_PASSWORD }}
       EMAIL_LOGIN: ${{ secrets.EMAIL_LOGIN }}
       PASSWORD: ${{ secrets.PASSWORD }}
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+
       - name: Install dependencies
         run: npm ci
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+
+      # 🔹 Run tests with JSON reporter
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --reporter=json > results.json || true
+
+      # 🔹 Parse test summary + failed tests
+      - name: Parse test summary
+        id: summary
+        run: |
+          passed=$(jq '.suites[].specs[].tests[] | select(.status=="passed") | .status' results.json | wc -l)
+          failed=$(jq '.suites[].specs[].tests[] | select(.status=="failed") | .status' results.json | wc -l)
+          skipped=$(jq '.suites[].specs[].tests[] | select(.status=="skipped") | .status' results.json | wc -l)
+          failed_tests=$(jq -r '.suites[].specs[].tests[] | select(.status=="failed") | .title' results.json | sed ':a;N;$!ba;s/\n/\n   - /g')
+          if [ -z "$failed_tests" ]; then
+            failed_tests="None 🎉"
+          fi
+          echo "PASSED=$passed" >> $GITHUB_ENV
+          echo "FAILED=$failed" >> $GITHUB_ENV
+          echo "SKIPPED=$skipped" >> $GITHUB_ENV
+          echo "FAILED_TESTS=$failed_tests" >> $GITHUB_ENV
+
+      # 🔹 Upload report (for debugging if needed)
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      # 🔹 Send summary email
+      - name: Send summary email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USER }}
+          password: ${{ secrets.EMAIL_PASS }}
+          subject: "Test Results for ${{ github.repository }}"
+          to: markchristiandurana75@gmail.com
+          from: ${{ secrets.EMAIL_USER }}
+          body: |
+            Hello 👋,
+
+            The latest Playwright test run has completed.
+
+            ✅ Passed: ${{ env.PASSED }}
+            ❌ Failed: ${{ env.FAILED }}
+            ⚡ Skipped: ${{ env.SKIPPED }}
+
+            🔎 Failed Tests:
+               - ${{ env.FAILED_TESTS }}
+
+            Repo: ${{ github.repository }}
+            Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
