@@ -61,16 +61,12 @@ async function addEvent(page, { eventName, description, startDate, endDate, allD
 }
 
 
-
-
 // Parameterized tests
 const repeats = ["Daily", "Weekly", "Monthly", "Annually"];
 
 for (const repeat of repeats) {
     test(`Add ${repeat} Event and validate event`, async ({ page }) => {
         await page.goto(process.env.API_URL);
-        await page.locator(`input[name="9bfbeee1-e10c-4ba5-a001-a5720875ef0d"]`).check();
-        await page.locator(`input[name="0a2ced40-2a0e-4118-8e92-43f90e6f0f31"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         const eventData = {
             eventName: `${repeat} Repeat`,
