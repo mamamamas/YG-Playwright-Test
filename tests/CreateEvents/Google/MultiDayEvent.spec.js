@@ -95,8 +95,8 @@ test("Validate existing event", async ({ page }) => {
     await page.goto(process.env.API_URL);
 
     // Enable Google Calendar, disable Microsoft Calendar
-    await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-    await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+    await page.locator(`input[name="9bfbeee1-e10c-4ba5-a001-a5720875ef0d"]`).check();
+    await page.locator(`input[name="0a2ced40-2a0e-4118-8e92-43f90e6f0f31"]`).uncheck();
     await page.locator('.offcanvas-backdrop').click();
     await page.waitForTimeout(10000);
 
