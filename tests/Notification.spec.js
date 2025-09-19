@@ -4,6 +4,7 @@ dotenv.config();
 test('Notification', async ({ page, context }) => {
     // Admin Login
     await page.goto(process.env.API_URL);
+    await page.waitForTimeout(2000);
     await page.getByRole('textbox', { name: 'Email' }).fill('hello@jlabs.team');
     await page.getByRole('textbox', { name: 'Password' }).fill('123456');
     await page.getByRole('button', { name: 'Sign In' }).click();
