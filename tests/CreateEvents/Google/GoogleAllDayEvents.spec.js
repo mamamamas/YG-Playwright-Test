@@ -50,7 +50,8 @@ async function addEvent(page, { eventName, description, startDate, endDate, allD
     await page.getByRole('button', { name: 'Create Event' }).click();
 
     // Assert success message
-    await expect(page.getByText('Event created successfully')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByRole('alert').first()).toContainText('Event created successfully');
+
 }
 
 async function validateEvent(page, { eventName, description }) {
