@@ -75,7 +75,7 @@ jobs:
           password: ${{ secrets.GOOGLE_PASSWORD }}
           subject: "Test Results for ${{ github.repository }}"
           to: markchristiandurana75@gmail.com
-          from: ${{ secrets.GOOGLE_EMAIL }}
+          from: Playwright CI <mcdurana@jlabs.team>
           body: |
             Hello 👋,
 
