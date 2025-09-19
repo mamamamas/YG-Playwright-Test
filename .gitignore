@@ -9,3 +9,7 @@ node_modules/
 Microsoft/
 /DeleteEvents/Microsoft/
 /Microsoft/
+test/AccountSettings/
+test/Customisation/
+test/DeleteEvents/
+test/EditEvents/
