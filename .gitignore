@@ -10,7 +10,6 @@ Microsoft/
 /DeleteEvents/Microsoft/
 /Microsoft/
 tests/AccountSettings/
-tests/CreateEvents/
 tests/Customisation/
 tests/DeleteEvents/
 tests/EditEvents/
