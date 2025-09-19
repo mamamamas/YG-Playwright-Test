@@ -73,7 +73,7 @@ jobs:
           password: ${{ secrets.GOOGLE_PASSWORD }}
           subject: "Test Results for ${{ github.repository }}"
           to: markchristiandurana75@gmail.com
-          from: ${{ secrets.EMAIL_USER }}
+          from: ${{ secrets.GOOGLE_EMAIL }}
           body: |
             Hello 👋,
 
