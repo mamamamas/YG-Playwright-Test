@@ -43,17 +43,20 @@ jobs:
       - name: Parse test summary
         id: summary
         run: |
-          passed=$(jq '.suites[].specs[].tests[] | select(.status=="passed") | .status' results.json | wc -l)
-          failed=$(jq '.suites[].specs[].tests[] | select(.status=="failed") | .status' results.json | wc -l)
-          skipped=$(jq '.suites[].specs[].tests[] | select(.status=="skipped") | .status' results.json | wc -l)
-          failed_tests=$(jq -r '.suites[].specs[].tests[] | select(.status=="failed") | .title' results.json | sed ':a;N;$!ba;s/\n/\n   - /g')
+          passed=$(jq '.suites[].specs[].tests[].results[] | select(.status=="passed") | .status' results.json | wc -l)
+          failed=$(jq '.suites[].specs[].tests[].results[] | select(.status=="failed") | .status' results.json | wc -l)
+          skipped=$(jq '.suites[].specs[].tests[].results[] | select(.status=="skipped") | .status' results.json | wc -l)
+
+          failed_tests=$(jq -r '.suites[].specs[].tests[] | select(.results[].status=="failed") | .title' results.json | sed ':a;N;$!ba;s/\n/\n   - /g')
           if [ -z "$failed_tests" ]; then
             failed_tests="None 🎉"
           fi
+
           echo "PASSED=$passed" >> $GITHUB_ENV
           echo "FAILED=$failed" >> $GITHUB_ENV
           echo "SKIPPED=$skipped" >> $GITHUB_ENV
           echo "FAILED_TESTS=$failed_tests" >> $GITHUB_ENV
+
 
       # 🔹 Upload report (for debugging if needed)
       - uses: actions/upload-artifact@v4
