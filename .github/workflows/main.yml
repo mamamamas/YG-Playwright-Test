@@ -33,12 +33,10 @@ jobs:
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - run: npx playwright test login.setup.ts
-      - run: npx playwright test CreateEvents
 
       # 🔹 Run tests with JSON reporter
       - name: Run Playwright tests
-        run: npx playwright test --ignore tests/CreateEvents/** --reporter=json | tee results.json || true
+        run: npx playwright test --reporter=json | tee results.json || true
 
 
       # 🔹 Parse test summary + failed tests

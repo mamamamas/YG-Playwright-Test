@@ -13,3 +13,4 @@ tests/AccountSettings/
 tests/Customisation/
 tests/DeleteEvents/
 tests/EditEvents/
+tests/CreateEvents/
