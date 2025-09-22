@@ -1,6 +1,12 @@
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 dotenv.config();
+
+test.afterEach(async ({ page }) => {
+  // This runs after every test
+  await page.close();  // cleanup example
+  console.log('Test finished');
+});
 test('Login with Google', async ({ page, context }) => {
   await page.goto(process.env.API_URL);
 

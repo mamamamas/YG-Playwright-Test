@@ -260,7 +260,7 @@ async function EditAllDayEvent(page, { eventName, description, newName, startDat
 
 async function validateEditedAllDayEvent(page, { newName, description }) {
     // Wait until the event appears
-    const calendarEvent = page.locator('#E-20250905');
+    const calendarEvent = page.locator('#E-20250906');
     await expect(calendarEvent).toBeVisible({ timeout: 10000 });
     await calendarEvent.click();
 

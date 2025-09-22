@@ -1,6 +1,11 @@
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 dotenv.config();
+test.afterEach(async ({ page }) => {
+    // This runs after every test
+    await page.close();  // cleanup example
+    console.log('Test finished');
+});
 test('Incorrect Email or Password', async ({ page }) => {
     await page.goto(process.env.API_URL);
     await page.getByRole('textbox', { name: 'Email' }).click();

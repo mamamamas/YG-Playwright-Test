@@ -28,23 +28,16 @@ jobs:
         with:
           node-version: lts/*
 
-      # 🔹 Cache npm for faster builds
-      - uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
       - name: Install dependencies
         run: npm ci
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # 🔹 Run tests with proper reporters
+      # 🔹 Run tests with JSON reporter
       - name: Run Playwright tests
-        run: npx playwright test --reporter=list,json=results.json,html || true
+        run: npx playwright test --reporter=json | tee results.json || true
+
 
       # 🔹 Parse test summary + failed tests
       - name: Parse test summary
@@ -70,10 +63,6 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
-      # 🔹 Zip report for email attachment
-      - name: Zip report
-        run: zip -r playwright-report.zip playwright-report/
-
       # 🔹 Send summary email
       - name: Send summary email
         uses: dawidd6/action-send-mail@v3
@@ -84,7 +73,7 @@ jobs:
           password: ${{ secrets.GOOGLE_PASSWORD }}
           subject: "Test Results for ${{ github.repository }}"
           to: markchristiandurana75@gmail.com, jennydurana@gmail.com
-          from: ${{ secrets.GOOGLE_EMAIL }}
+          from: Playwright CI <mcdurana@jlabs.team>
           body: |
             Hello 👋,
 
@@ -94,11 +83,11 @@ jobs:
             ❌ Failed: ${{ env.FAILED }}
             ⚡ Skipped: ${{ env.SKIPPED }}
 
-            🔎 Failed Tests:
+            🔎 Failed Tests:=
                - ${{ env.FAILED_TESTS }}
 
             Repo: ${{ github.repository }}
             Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
               📎 Please see attached for the full HTML report.
-          attachments: playwright-report.zip
+          attachments: playwright-report/index.html
