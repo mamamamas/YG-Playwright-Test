@@ -41,7 +41,7 @@ async function addMultiDayEvent(page, { eventName, description, startDate, endDa
     await page.getByRole('option', { name: `Choose ${endDate}` }).click();
 
     // Organizer
-    await page.getByRole('button', { name: /@gmail\.com$/ }).click();
+    await page.click("#input-calendar > button");
     await page.getByRole('menuitem', { name: /jennydurana@gmail.com/ }).click();
     // await page.click("#input-calendar > button");
     // await page.getByRole('menuitem', { name: /markchristiandurana75@gmail/ }).click();
@@ -116,7 +116,7 @@ async function addAllDayEvent(page, { eventName, description, startDate, endDate
     }
 
     // Organizer
-    await page.getByRole('button', { name: /@gmail\.com$/ }).click();
+    await page.click("#input-calendar > button");
     await page.getByRole('menuitem', { name: /jennydurana@gmail.com/ }).click();
 
     // Category
@@ -198,7 +198,7 @@ async function addReccurringEvent(page, { eventName, description, startDate, end
     await page.getByRole('menuitem', { name: repeat }).click();
 
     // Organizer
-    await page.getByRole('button', { name: /@gmail\.com$/ }).click();
+    await page.click("#input-calendar > button");
     await page.getByRole('menuitem', { name: /jennydurana@gmail.com/ }).click();
     // await page.click("#input-calendar > button");
     // await page.getByRole('menuitem', { name: /markchristiandurana75@gmail/ }).click();

@@ -2,14 +2,11 @@ import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 dotenv.config();
 
-test.beforeEach(async ({ page }) => {
+
+test('Print', async ({ page }) => {
     await page.goto(process.env.API_URL);
     // await page.locator('input[name="b8397a97-e4e6-4b7d-8c90-87498c714e80"]').check();
     await page.locator('.offcanvas-backdrop').click();
-    await page.waitForTimeout(2000);
-});
-
-test('Print', async ({ page }) => {
     await page.getByRole('button', { name: 'Print' }).click();
 
     await page.getByRole('spinbutton', { name: 'Headers' }).fill('19');
@@ -29,11 +26,13 @@ test('Print', async ({ page }) => {
     await page.getByRole('button', { name: 'Apply & Print' }).click();
 });
 
-test('Print about', async ({ browser }) => {
+test.only('Print about', async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
-
     await page.goto(process.env.API_URL);
+    // await page.locator('input[name="b8397a97-e4e6-4b7d-8c90-87498c714e80"]').check();
+    await page.locator('.offcanvas-backdrop').click();
+
     await page.getByRole('button', { name: 'Print' }).click();
 
     const Link = page.locator("[href*='printing-saving-as-pdf']");

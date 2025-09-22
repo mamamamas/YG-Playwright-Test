@@ -36,7 +36,9 @@ jobs:
 
       # 🔹 Run tests with JSON reporter
       - name: Run Playwright tests
-        run: npx playwright test --reporter=list,json,html > results.json || true
+        run: npx playwright test --reporter=list --reporter=html --reporter=json=results.json || true
+
+
 
       # 🔹 Parse test summary + failed tests
       - name: Parse test summary
