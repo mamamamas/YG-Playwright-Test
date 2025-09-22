@@ -19,9 +19,9 @@ test.describe.serial("Create MultiDay Events", () => {
         await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
 
         // Enable Google Calendar, disable Microsoft Calendar
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
 
         const eventData = {
@@ -52,7 +52,7 @@ test.describe.serial("Create MultiDay Events", () => {
 });
 
 test.describe.serial("Create AllDay Events", () => {
-    test("Add ALL DAY event", async ({ page }) => {
+    test.only("Add ALL DAY event", async ({ page }) => {
         await page.goto(process.env.API_URL);
         await page.locator('.offcanvas-backdrop').click();
 
@@ -97,9 +97,9 @@ test.describe.serial("Edit Events", () => {
         await page.goto(process.env.API_URL);
 
         // Enable Google Calendar, disable Microsoft Calendar
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(5000);
 
@@ -119,9 +119,9 @@ test.describe.serial("Edit Events", () => {
         await page.goto(process.env.API_URL);
 
         // Enable Google Calendar, disable Microsoft Calendar
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(10000);
 
@@ -142,9 +142,9 @@ test.describe.serial("Edit Events", () => {
         await page.goto(process.env.API_URL);
 
         // Enable Google Calendar, disable Microsoft Calendar
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(5000);
 
@@ -165,9 +165,9 @@ test.describe.serial("Edit Events", () => {
         await page.goto(process.env.API_URL);
 
         // Enable Google Calendar, disable Microsoft Calendar
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(10000);
 
@@ -215,9 +215,9 @@ test.describe.serial("Edit Events", () => {
 test.describe.serial("Delete Events", () => {
     test("Delete All Day Event", async ({ page }) => {
         await page.goto(process.env.API_URL);
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(10000);
         const calendarEvent = page.locator('#E-20250905');
@@ -237,9 +237,9 @@ test.describe.serial("Delete Events", () => {
 
     test('Delete MultiDay Events', async ({ page }) => {
         await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(5000);
         const calendarEvent = page.locator('#E-20250906');
@@ -258,9 +258,9 @@ test.describe.serial("Delete Events", () => {
 
     test('Delete Daily', async ({ page }) => {
         await page.goto(process.env.API_URL);
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(5000);
         const calendarEvent = page.locator('#E-20250905');

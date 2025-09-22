@@ -12,7 +12,7 @@ test('Login with Google', async ({ page, context }) => {
   // Login on Google popup
   await popup.getByRole('textbox', { name: 'Email or phone' }).fill(process.env.GOOGLE_EMAIL);
   await popup.getByRole('button', { name: 'Next' }).click();
-  await popup.getByRole('textbox', { name: 'Enter your password' }).fill(process.env.PASSWORD);
+  await popup.getByRole('textbox', { name: 'Enter your password' }).fill(process.env.GOOGLE_PASSWORD);
   await popup.getByRole('button', { name: 'Next' }).click();
   await popup.getByRole('button', { name: 'Continue' }).click();
   await popup.getByRole('button', { name: 'Continue' }).click();

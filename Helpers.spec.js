@@ -29,7 +29,7 @@ async function addMultiDayEvent(page, { eventName, description, startDate, endDa
 
     // All Day
     if (allDay) {
-        await page.getByRole('checkbox', { name: 'All Day' }).check();
+        await page.getByLabel("All Day").click()
     }
 
     // Select Start Date
@@ -111,7 +111,8 @@ async function addAllDayEvent(page, { eventName, description, startDate, endDate
 
     // All Day
     if (allDay) {
-        await page.getByRole('checkbox', { name: 'All Day' }).check();
+        await page.getByLabel("All Day").click()
+        // await page.getByRole('checkbox', { name: 'All Day' }).check();
     }
 
     // Organizer
@@ -181,7 +182,7 @@ async function addReccurringEvent(page, { eventName, description, startDate, end
 
     // All Day
     if (allDay) {
-        await page.getByRole('checkbox', { name: 'All Day' }).check();
+        await page.getByLabel("All Day").click()
     }
 
     // Select Start Date
@@ -249,7 +250,7 @@ async function EditAllDayEvent(page, { eventName, description, newName, startDat
     await page.locator('.has-icon').first().click();
     await page.getByRole('option', { name: `Choose ${startDate}` }).click();
     if (allDay) {
-        await page.getByRole('checkbox', { name: 'All Day' }).check();
+        await page.getByLabel("All Day").click()
     }
 
     await page.getByRole('button', { name: 'Update Event' }).click();
@@ -288,9 +289,8 @@ async function EditMultiEvent(page, { eventName, description, newName, startDate
     await page.getByRole('textbox', { name: 'Name' }).fill(newName);
     // All Day
     if (allDay) {
-        await page.getByRole('checkbox', { name: 'All Day' }).check();
+        await page.getByLabel("All Day").click()
     }
-
     // Select Start Date
     await page.locator('.has-icon').first().click();
     await page.getByRole('option', { name: `Choose ${startDate}` }).click();
@@ -335,7 +335,7 @@ async function EditReccurringEvent(page, { eventName, description, newName, star
 
     // All Day
     if (allDay) {
-        await page.getByRole('checkbox', { name: 'All Day' }).check();
+        await page.getByLabel("All Day").click()
     }
 
     // Start Date

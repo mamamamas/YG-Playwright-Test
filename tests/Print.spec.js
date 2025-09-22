@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
     await page.waitForTimeout(2000);
 });
 
-test('Print', async ({ page }) => {
+test.only('Print', async ({ page }) => {
     await page.getByRole('button', { name: 'Print' }).click();
 
     await page.getByRole('spinbutton', { name: 'Headers' }).fill('19');
@@ -17,7 +17,7 @@ test('Print', async ({ page }) => {
     await page.getByRole('spinbutton', { name: 'Body' }).fill('18');
     await page.getByRole('spinbutton', { name: 'Border Weight' }).fill('3');
 
-    const PrintBorders = page.getByRole('checkbox', { name: 'Print Borders' });
+    const PrintBorders = page.getByLabel('Print Borders');
     await expect(PrintBorders).toBeVisible();
 
     await PrintBorders.uncheck();

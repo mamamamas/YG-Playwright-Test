@@ -5,14 +5,21 @@ test('Share Calendar', async ({ page, context }) => {
     await page.goto(process.env.API_URL);
     await page.locator('.offcanvas-backdrop').click();
     await page.getByRole('button', { name: 'Share' }).click();
-    await page.getByRole('checkbox', { name: 'Year - Monthly' }).check();
-    await page.getByRole('checkbox', { name: 'Year - Monthly' }).check();
-    await page.getByRole('checkbox', { name: 'Agenda' }).check();
-    await page.getByRole('checkbox', { name: 'Month', exact: true }).check();
-    await page.getByRole('checkbox', { name: 'Year - Horizontal' }).check();
-    await page.getByRole('checkbox', { name: 'Week' }).check();
-    await page.getByRole('checkbox', { name: 'Year - Vertical' }).check();
-    await page.getByRole('checkbox', { name: 'Day' }).check();
+    await page.getByLabel('Year - Monthly').check();
+    await page.getByLabel('Agenda').check();
+    await page.getByLabel('Month', { exact: true }).check();
+    await page.getByLabel('Year - Horizontal').check();
+    await page.getByLabel('Week').check();
+    await page.getByLabel('Year - Vertical').check();
+    await page.getByLabel('Day').check();
+    // await page.getByRole('checkbox', { name: 'Year - Monthly' }).check();
+    // await page.getByRole('checkbox', { name: 'Year - Monthly' }).check();
+    // await page.getByRole('checkbox', { name: 'Agenda' }).check();
+    // await page.getByRole('checkbox', { name: 'Month', exact: true }).check();
+    // await page.getByRole('checkbox', { name: 'Year - Horizontal' }).check();
+    // await page.getByRole('checkbox', { name: 'Week' }).check();
+    // await page.getByRole('checkbox', { name: 'Year - Vertical' }).check();
+    // await page.getByRole('checkbox', { name: 'Day' }).check();
     await page.locator('div').filter({ hasText: /^LinkCopy$/ }).getByRole('button').click();
     const ClipBoard = page.getByText('Copied to clipboard.')
     await expect(ClipBoard).toBeVisible()

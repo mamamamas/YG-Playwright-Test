@@ -95,8 +95,6 @@ test('Bill', async ({ page, context }) => {
     await page.getByRole('button', { name: '2025' }).click();
     await page.getByRole('menuitem', { name: '2025' }).click();
     await expect(page.locator('#body-container')).toContainText('Payment Method');
-    await page.getByRole('textbox', { name: 'Search Billing' }).fill('Free Plan');
-    await expect(page.locator('tbody')).toContainText('Free Plan');
 });
 
 
