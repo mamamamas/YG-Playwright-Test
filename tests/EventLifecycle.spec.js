@@ -52,7 +52,7 @@ test.describe.serial("Create MultiDay Events", () => {
 });
 
 test.describe.serial("Create AllDay Events", () => {
-    test.only("Add ALL DAY event", async ({ page }) => {
+    test("Add ALL DAY event", async ({ page }) => {
         await page.goto(process.env.API_URL);
         await page.locator('.offcanvas-backdrop').click();
 

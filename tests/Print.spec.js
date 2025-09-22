@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
     await page.waitForTimeout(2000);
 });
 
-test.only('Print', async ({ page }) => {
+test('Print', async ({ page }) => {
     await page.getByRole('button', { name: 'Print' }).click();
 
     await page.getByRole('spinbutton', { name: 'Headers' }).fill('19');
