@@ -256,7 +256,7 @@ test.describe.serial("Delete Events", () => {
         await expect(page.getByRole('alert').last()).toHaveText(/Event deleted successfully/, { timeout: 10000 });
     });
 
-    test.only('Delete Daily', async ({ page }) => {
+    test('Delete Daily', async ({ page }) => {
         await page.goto(process.env.API_URL);
         await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
         // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
@@ -273,7 +273,7 @@ test.describe.serial("Delete Events", () => {
         await page.getByRole('button', { name: 'Delete Event' }).click();
         await expect(page.getByRole('alert').first()).toHaveText(/Event deleted successfully/, { timeout: 10000 });
     });
-    test.only('Delete Weekly', async ({ page }) => {
+    test('Delete Weekly', async ({ page }) => {
         await page.goto(process.env.API_URL);
         // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
         await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -290,7 +290,7 @@ test.describe.serial("Delete Events", () => {
         await page.getByRole('button', { name: 'Delete Event' }).click();
         await expect(page.getByRole('alert').first()).toHaveText(/Event deleted successfully/, { timeout: 10000 });
     });
-    test.only('Delete Monthly', async ({ page }) => {
+    test('Delete Monthly', async ({ page }) => {
         await page.goto(process.env.API_URL);
         // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
         await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -307,7 +307,7 @@ test.describe.serial("Delete Events", () => {
         await page.getByRole('button', { name: 'Delete Event' }).click();
         await expect(page.getByRole('alert').first()).toHaveText(/Event deleted successfully/, { timeout: 10000 });
     });
-    test.only('Delete Annually', async ({ page }) => {
+    test('Delete Annually', async ({ page }) => {
         await page.goto(process.env.API_URL);
         // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check()
         await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
