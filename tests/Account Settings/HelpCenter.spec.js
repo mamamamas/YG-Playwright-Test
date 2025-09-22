@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
-dotenv.config(); s
+dotenv.config();
 test('test', async ({ page }) => {
     await page.goto(process.env.API_URL);
     await page.locator('.offcanvas-backdrop').click();

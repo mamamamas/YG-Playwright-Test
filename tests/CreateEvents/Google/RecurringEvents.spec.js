@@ -29,8 +29,10 @@ async function addEvent(page, { eventName, description, startDate, endDate, allD
     await page.getByRole('menuitem', { name: repeat }).click();
 
     // Organizer
-    await page.click("#input-calendar > button");
-    await page.getByRole('menuitem', { name: /markchristiandurana75@gmail/ }).click();
+    await page.getByRole('button', { name: /@gmail\.com$/ }).click();
+    await page.getByRole('menuitem', { name: /jennydurana@gmail.com/ }).click();
+    // await page.click("#input-calendar > button");
+    // await page.getByRole('menuitem', { name: /markchristiandurana75@gmail/ }).click();
 
     // Category
     // await page.locator('#dropdown-category').getByRole('button').click();
@@ -39,8 +41,10 @@ async function addEvent(page, { eventName, description, startDate, endDate, allD
     // await categoryOption.click();
 
     // Calendar
-    await page.getByRole('button', { name: '2nd Test Calendar', exact: true }).click();
-    await page.getByRole('menuitem', { name: '2nd Test Calendar' }).click();
+    await page.click("#input-sub-calendar > button")
+    await page.getByRole('menuitem', { name: 'Main Test Calendat' }).click();
+    // await page.getByRole('button', { name: '2nd Test Calendar', exact: true }).click();
+    // await page.getByRole('menuitem', { name: '2nd Test Calendar' }).click();
 
     // Guests
     await page.getByText('Add guestsGuests').click();
@@ -55,9 +59,10 @@ async function addEvent(page, { eventName, description, startDate, endDate, allD
 
     // Submit
     await page.getByRole('button', { name: 'Create Event' }).click();
-
+    await page.waitForTimeout(800);
     // Assert success message
-    await expect(page.getByRole('alert').first()).toContainText('Event created successfully');
+    await expect(page.getByRole('alert').last()).toHaveText(/Event created successfully/, { timeout: 10000 });
+
 
 }
 
@@ -67,7 +72,7 @@ const repeats = ["Daily", "Weekly", "Monthly", "Annually"];
 
 for (const repeat of repeats) {
     test(`Add ${repeat} Event and validate event`, async ({ page }) => {
-        await page.goto(process.env.API_URL);
+        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
         await page.locator('.offcanvas-backdrop').click();
         const eventData = {
             eventName: `${repeat} Repeat`,

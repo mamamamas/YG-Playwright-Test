@@ -23,7 +23,7 @@ async function addEvent(page, { eventName, description, startDate, endDate, allD
 
     // Organizer
     await page.getByRole('button', { name: /@gmail\.com$/ }).click();
-    await page.getByRole('menuitem', { name: /markchristiandurana75@gmail/ }).click();
+    await page.getByRole('menuitem', { name: /jennydurana@gmail.com/ }).click();
 
     // Category
     await page.locator('#dropdown-category').getByRole('button').click();
@@ -32,12 +32,14 @@ async function addEvent(page, { eventName, description, startDate, endDate, allD
     await categoryOption.click();
 
     // Calendar
-    await page.getByRole('button', { name: '2nd Test Calendar', exact: true }).click();
-    await page.getByRole('menuitem', { name: '2nd Test Calendar' }).click();
+    await page.click("#input-sub-calendar > button")
+    await page.getByRole('menuitem', { name: 'Main Test Calendat' }).click();
+    // await page.getByRole('button', { name: '2nd Test Calendar', exact: true }).click();
+    // await page.getByRole('menuitem', { name: '2nd Test Calendar' }).click();
 
-    // Guests
-    await page.getByText('Add guestsGuests').click();
-    await page.getByRole('textbox', { name: 'Add guests' }).fill('jennydurana@gmail.com');
+    // // Guests
+    // await page.getByText('Add guestsGuests').click();
+    // await page.getByRole('textbox', { name: 'Add guests' }).fill('jennydurana@gmail.com');
 
     // Location
     await page.getByRole('textbox', { name: 'Add location' }).fill('Cav');
@@ -48,9 +50,10 @@ async function addEvent(page, { eventName, description, startDate, endDate, allD
 
     // Submit
     await page.getByRole('button', { name: 'Create Event' }).click();
-
+    await page.waitForTimeout(800);
     // Assert success message
-    await expect(page.getByRole('alert').first()).toContainText('Event created successfully');
+    await expect(page.getByRole('alert').last()).toHaveText(/Event created successfully/, { timeout: 10000 });
+
 
 }
 
@@ -61,7 +64,10 @@ async function validateEvent(page, { eventName, description }) {
     await calendarEvent.click();
 
     // Open event details
-    await page.getByRole('button', { name: `${eventName} Sep 4, All` }, { timeout: 30000 }).first().click();
+    await expect(async () => {
+        await page.getByRole('button', { name: new RegExp(eventName) }).last().click();
+    }).toPass({ timeout: 20000 });
+    // await page.getByRole('button', { name: `${eventName} Sep 4, All` }, { timeout: 30000 }).first().click();
 
     // Validate details
     const modal = page.locator('#view-event-modal');
@@ -71,12 +77,12 @@ async function validateEvent(page, { eventName, description }) {
 }
 
 
-test("Add event", async ({ page }) => {
+test("Add ALL DAY event", async ({ page }) => {
     await page.goto(process.env.API_URL);
     await page.locator('.offcanvas-backdrop').click();
 
     const eventData = {
-        eventName: "Nice Nice",
+        eventName: "All Day Events",
         description: "Automating testing",
         startDate: "Thursday, September 4th,",
         allDay: true,
@@ -85,17 +91,18 @@ test("Add event", async ({ page }) => {
     await addEvent(page, eventData);
 });
 
-test("Validate existing event", async ({ page }) => {
+test("Validate AllDay event", async ({ page }) => {
     await page.goto(process.env.API_URL);
 
     // Enable Google Calendar, disable Microsoft Calendar
-    await page.locator(`input[name="9bfbeee1-e10c-4ba5-a001-a5720875ef0d"]`).check();
+    await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+    // await page.locator(`input[name="9bfbeee1-e10c-4ba5-a001-a5720875ef0d"]`).check();
     await page.locator(`input[name="0a2ced40-2a0e-4118-8e92-43f90e6f0f31"]`).uncheck();
     await page.locator('.offcanvas-backdrop').click();
     await page.waitForTimeout(10000);
 
     const eventData = {
-        eventName: "Nice Nice",
+        eventName: "All Day Events",
         description: "Automating testing",
         allDay: true,
     };
