@@ -35,8 +35,11 @@ jobs:
         run: npx playwright install --with-deps
 
       # 🔹 Run tests with JSON reporter
-      - name: Run Playwright tests
-        run: npx playwright test --reporter=list --reporter=html --reporter=json=results.json || true
+      - name: Run Playwright tests (HTML + list)
+        run: npx playwright test --reporter=list,html
+
+      - name: Run Playwright tests (JSON for parsing)
+        run: npx playwright test --reporter=json > results.json || true
 
 
 
