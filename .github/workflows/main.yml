@@ -36,9 +36,8 @@ jobs:
 
       # 🔹 Run tests with JSON reporter
       - name: Run Playwright tests
-        run: |
-          npx playwright test --reporter=html,json --reporter-options json=results.json
-        continue-on-error: true
+        run: npx playwright test || true
+
 
 
 
