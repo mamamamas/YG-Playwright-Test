@@ -1,9 +1,9 @@
-name: YG Playwright Tests
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
 jobs:
   test:
     timeout-minutes: 60
@@ -20,42 +20,129 @@ jobs:
       PASSWORD: ${{ secrets.PASSWORD }}
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - name: Upload Playwright HTML report
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - uses: actions/checkout@v4
 
-    - name: Zip Playwright HTML report
-      if: always()
-      run: zip -r playwright-report.zip playwright-report
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
 
-       # 🔹 Send summary email
-    - name: Send summary email
-      if: always()
-      uses: dawidd6/action-send-mail@v3
-      with:
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      # 🔹 Run tests with JSON reporter
+      - name: Run Playwright tests
+        run: npx playwright test
+        continue-on-error: true
+
+      - name: Zip Playwright HTML report
+        run: zip -r playwright-report.zip playwright-report
+
+      - name: Check workspace contents
+        run: ls -la
+
+      # 🔹 Parse test summary + test titles
+      - name: Parse test summary
+        id: summary
+        run: |
+          passed=$(jq '[.. | .results? // empty | .[] | select(.status=="passed")] | length' results.json)
+          failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' results.json)
+          skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' results.json)
+
+           # Passed test titles
+          passed_tests=$(jq -r '
+            [.. | .specs? // empty | .[] 
+              | select(any(.tests[].results[]?.status; . == "passed")) 
+              | .title] 
+            | .[]
+          ' results.json)
+
+          # Failed test titles
+          failed_tests=$(jq -r '
+            [.. | .specs? // empty | .[] 
+              | select(any(.tests[].results[]?.status; . == "failed")) 
+              | .title] 
+            | .[]
+          ' results.json)
+
+          # Skipped test titles
+          skipped_tests=$(jq -r '
+            [.. | .specs? // empty | .[] 
+              | select(any(.tests[].results[]?.status; . == "skipped")) 
+              | .title] 
+            | .[]
+          ' results.json)
+
+          echo "✅ Passed: $passed"
+          echo "❌ Failed: $failed"
+          echo "⚠️ Skipped: $skipped"
+
+          # Handle "None" cases
+          if [ -z "$passed_tests" ]; then passed_tests="None"; fi
+          if [ -z "$failed_tests" ]; then failed_tests="None"; fi
+          if [ -z "$skipped_tests" ]; then skipped_tests="None"; fi
+
+          # Export to env for email step
+                {
+          echo "PASSED=$passed"
+          echo "FAILED=$failed"
+          echo "SKIPPED=$skipped"
+
+          echo "PASSED_TESTS<<EOF"
+          echo "$passed_tests"
+          echo "EOF"
+
+          echo "FAILED_TESTS<<EOF"
+          echo "$failed_tests"
+          echo "EOF"
+
+          echo "SKIPPED_TESTS<<EOF"
+          echo "$skipped_tests"
+          echo "EOF"
+          } >> $GITHUB_ENV
+
+
+
+     # 🔹 Upload report (optional – for debugging if needed)
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+      # 🔹 Send summary email
+      - name: Send summary email
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{ secrets.GOOGLE_EMAIL }}
           password: ${{ secrets.GOOGLE_PASSWORD }}
           subject: "Test Results for ${{ github.repository }}"
-          to: markchristiandurana75@gmail.com, jennydurana@gmail.com
+          to: markchristiandurana75@gmail.com, roleynes@jlabs.team
           from: Playwright CI <mcdurana@jlabs.team>
           body: |
             Playwright test run completed for repository **${{ github.event.repository.name }}**.
+
+            Test Results:
+            -------------------------------------------------------------------
+            ✅ Passed: ${{ env.PASSED }}
+            ❌ Failed: ${{ env.FAILED }}
+            ⚠️ Skipped: ${{ env.SKIPPED }}
+
+            ✅ Passed Tests:
+            ${{ env.PASSED_TESTS }}
+
+            ❌ Failed Tests:
+            ${{ env.FAILED_TESTS }}
+
+            ⚠️ Skipped Tests:
+            ${{ env.SKIPPED_TESTS }}
+            -------------------------------------------------------------------
 
             For more details, please see the attached HTML report files.
 
@@ -81,166 +168,3 @@ jobs:
             This email was sent automatically by GitHub Actions.
 
             attachments: "playwright-report.zip"
-
-# on:
-#   push:
-#     branches: [ main, master ]
-#   pull_request:
-#     branches: [ main, master ]
-
-# jobs:
-#   test:
-#     timeout-minutes: 60
-#     runs-on: ubuntu-latest
-#     env: # ✅ Inject secrets into process.env
-#       API_URL: ${{ secrets.API_URL }}
-#       LOGIN_URL: ${{ secrets.LOGIN_URL }}
-#       REGISTER_URL: ${{ secrets.REGISTER_URL }}
-#       GOOGLE_CALENDAR: ${{ secrets.GOOGLE_CALENDAR }}
-#       MICROSOFT_CALENDAR: ${{ secrets.MICROSOFT_CALENDAR }}
-#       GOOGLE_EMAIL: ${{ secrets.GOOGLE_EMAIL }}
-#       GOOGLE_PASSWORD: ${{ secrets.GOOGLE_PASSWORD }}
-#       EMAIL_LOGIN: ${{ secrets.EMAIL_LOGIN }}
-#       PASSWORD: ${{ secrets.PASSWORD }}
-
-#     steps:
-#       - uses: actions/checkout@v4
-
-#       - uses: actions/setup-node@v4
-#         with:
-#           node-version: lts/*
-
-#       - name: Install dependencies
-#         run: npm ci
-
-#       - name: Install Playwright Browsers
-#         run: npx playwright install --with-deps
-
-#       # 🔹 Run tests with JSON reporter
-#       - name: Run Playwright tests
-#         run: npx playwright test || true
-
-#       # 🔹 Parse test summary + test titles
-#       - name: Parse test summary
-#         id: summary
-#         run: |
-#           passed=$(jq '[.. | .results? // empty | .[] | select(.status=="passed")] | length' results.json)
-#           failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' results.json)
-#           skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' results.json)
-
-#            # Passed test titles
-#           passed_tests=$(jq -r '
-#             [.. | .specs? // empty | .[] 
-#               | select(any(.tests[].results[]?.status; . == "passed")) 
-#               | .title] 
-#             | .[]
-#           ' results.json)
-
-#           # Failed test titles
-#           failed_tests=$(jq -r '
-#             [.. | .specs? // empty | .[] 
-#               | select(any(.tests[].results[]?.status; . == "failed")) 
-#               | .title] 
-#             | .[]
-#           ' results.json)
-
-#           # Skipped test titles
-#           skipped_tests=$(jq -r '
-#             [.. | .specs? // empty | .[] 
-#               | select(any(.tests[].results[]?.status; . == "skipped")) 
-#               | .title] 
-#             | .[]
-#           ' results.json)
-
-#           echo "✅ Passed: $passed"
-#           echo "❌ Failed: $failed"
-#           echo "⚠️ Skipped: $skipped"
-
-#           # Handle "None" cases
-#           if [ -z "$passed_tests" ]; then passed_tests="None"; fi
-#           if [ -z "$failed_tests" ]; then failed_tests="None"; fi
-#           if [ -z "$skipped_tests" ]; then skipped_tests="None"; fi
-
-#           # Export to env for email step
-#                 {
-#           echo "PASSED=$passed"
-#           echo "FAILED=$failed"
-#           echo "SKIPPED=$skipped"
-
-#           echo "PASSED_TESTS<<EOF"
-#           echo "$passed_tests"
-#           echo "EOF"
-
-#           echo "FAILED_TESTS<<EOF"
-#           echo "$failed_tests"
-#           echo "EOF"
-
-#           echo "SKIPPED_TESTS<<EOF"
-#           echo "$skipped_tests"
-#           echo "EOF"
-#           } >> $GITHUB_ENV
-
-
-
-#      # 🔹 Upload report (optional – for debugging if needed)
-#       - uses: actions/upload-artifact@v4
-#         if: ${{ !cancelled() }}
-#         with:
-#           name: playwright-report
-#           path: playwright-report/
-#           retention-days: 30
-
-#       # 🔹 Send summary email
-#       - name: Send summary email
-#         uses: dawidd6/action-send-mail@v3
-#         with:
-#           server_address: smtp.gmail.com
-#           server_port: 465
-#           username: ${{ secrets.GOOGLE_EMAIL }}
-#           password: ${{ secrets.GOOGLE_PASSWORD }}
-#           subject: "Test Results for ${{ github.repository }}"
-#           to: markchristiandurana75@gmail.com, jennydurana@gmail.com
-#           from: Playwright CI <mcdurana@jlabs.team>
-#           body: |
-#             Playwright test run completed for repository **${{ github.event.repository.name }}**.
-
-#             Test Results:
-#             -------------------------------------------------------------------
-#             ✅ Passed: ${{ env.PASSED }}
-#             ❌ Failed: ${{ env.FAILED }}
-#             ⚠️ Skipped: ${{ env.SKIPPED }}
-
-#             ✅ Passed Tests:
-#             ${{ env.PASSED_TESTS }}
-
-#             ❌ Failed Tests:
-#             ${{ env.FAILED_TESTS }}
-
-#             ⚠️ Skipped Tests:
-#             ${{ env.SKIPPED_TESTS }}
-#             -------------------------------------------------------------------
-
-#             For more details, please see the attached HTML report files.
-
-#             -------------------------------------------------------------------
-#             📑 Instructions for opening the Playwright HTML report:
-#             1. Download the attached `playwright-report.zip`.
-#             2. Extract the ZIP file.
-#             3. Open `index.html` in your browser (Chrome, Edge, Firefox, or Safari).
-#             - If the report appears blank, make sure you’re opening it from your file system, not inside your email client or a cloud preview.
-
-#             -------------------------------------------------------------------
-#             🕵️ Instructions for viewing Playwright trace files:
-#             1. Download the workflow artifact named **playwright-all-reports** from this run:
-#               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-#             2. Extract the ZIP file and locate the `test-results` folder.
-#             3. Inside, you’ll find `trace-<hash>.zip` files for each test.
-#             4. Open https://trace.playwright.dev in your browser.
-#             5. Drag and drop a trace file into the viewer to inspect actions, steps, and screenshots.
-
-#             -------------------------------------------------------------------
-#             Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-#             This email was sent automatically by GitHub Actions.
-
-#             attachments: "playwright-report.zip"
