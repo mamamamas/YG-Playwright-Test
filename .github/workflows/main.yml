@@ -104,7 +104,6 @@ jobs:
 
 
 
-
      # 🔹 Upload report (optional – for debugging if needed)
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -129,31 +128,30 @@ jobs:
           to: markchristiandurana75@gmail.com, jennydurana@gmail.com
           from: Playwright CI <mcdurana@jlabs.team>
           body: |
-            Hello 👋,
-
-            The latest Playwright test run has completed.
+            Playwright test run completed for repository **${{ github.event.repository.name }}**.
 
             ✅ Passed: ${{ env.PASSED }}
             ❌ Failed: ${{ env.FAILED }}
-            ⚡ Skipped: ${{ env.SKIPPED }}
+            ⚠️ Skipped: ${{ env.SKIPPED }}
 
+            -------------------------------------------------------------------
             ✅ Passed Tests:
-              - ${{ env.PASSED_TESTS }}
+            ${{ env.PASSED_TESTS }}
 
             ❌ Failed Tests:
-              - ${{ env.FAILED_TESTS }}
+            ${{ env.FAILED_TESTS }}
 
-            ⚡ Skipped Tests:
-              - ${{ env.SKIPPED_TESTS }}
+            ⚠️ Skipped Tests:
+            ${{ env.SKIPPED_TESTS }}
+            -------------------------------------------------------------------
 
-            Repo: ${{ github.repository }}
-            Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-                Playwright test run completed for repository: ${{ github.repository }}.
+            📑 Instructions:
+            - Download and unzip the attached `playwright-report.zip`.
+            - Open `index.html` in your browser (Chrome, Edge, Firefox, Safari).
+            - You’ll see the full interactive Playwright report.
 
             Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            Please see attached the full Playwright HTML report (zipped).
-            1. Download and extract the ZIP file.
-            2. Open `index.html` inside `playwright-report/` in your browser.
-          attachments: playwright-report.zip
+            This email was sent automatically by GitHub Actions.
+
+            attachments: "playwright-report.zip"
