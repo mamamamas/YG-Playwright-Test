@@ -2,60 +2,60 @@
   "cookies": [
     {
       "name": "_ga",
-      "value": "GA1.1.1511520912.1758552356",
+      "value": "GA1.1.402091255.1758606126",
       "domain": ".yearglance.com",
       "path": "/",
-      "expires": 1793112358.747458,
+      "expires": 1793166128.382695,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "_ga_SESJPKMC6L",
-      "value": "GS2.1.s1758552355$o1$g1$t1758552358$j57$l0$h0",
+      "value": "GS2.1.s1758606125$o1$g1$t1758606128$j57$l0$h0",
       "domain": ".yearglance.com",
       "path": "/",
-      "expires": 1793112358.766205,
+      "expires": 1793166128.396918,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "encheventsnippet",
-      "value": "{%22uuid%22:%22bd3203e1-5b88-4875-b572-414339720c1b%22%2C%22initialReferrer%22:%22https://staging-v2.yearglance.com/auth/login%22}",
+      "value": "{%22uuid%22:%225bcc931f-34c4-4cf7-b008-210bbb07ae7d%22%2C%22initialReferrer%22:%22https://staging-v2.yearglance.com/auth/login%22}",
       "domain": ".yearglance.com",
       "path": "/",
-      "expires": 1790088359,
+      "expires": 1790142128,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "m",
-      "value": "42e5a19f-588c-4a28-b616-7661a4090f889e1fcc",
+      "value": "2225c0b5-f3d2-46ed-b576-c27390d612d3668c1d",
       "domain": "m.stripe.com",
       "path": "/",
-      "expires": 1793112362.949526,
+      "expires": 1793166132.571483,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "__stripe_mid",
-      "value": "9b98e404-df53-4c60-bdff-e4f051d128180a2f59",
+      "value": "7a9dc846-3267-4a88-9a3c-7b427e61a89ea98cf3",
       "domain": ".staging-v2.yearglance.com",
       "path": "/",
-      "expires": 1790088362,
+      "expires": 1790142132,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Strict"
     },
     {
       "name": "__stripe_sid",
-      "value": "6a35468d-77ed-4156-8e9f-d68da5c0744409b27c",
+      "value": "8144d2d0-f970-4905-98b9-2ea9a141e855904f31",
       "domain": ".staging-v2.yearglance.com",
       "path": "/",
-      "expires": 1758554162,
+      "expires": 1758607932,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Strict"
@@ -67,11 +67,11 @@
       "localStorage": [
         {
           "name": "persist:Auth",
-          "value": "{\"accessToken\":\"\\\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3N0YWdpbmctYXBpLXYyLnllYXJnbGFuY2UuY29tL2FwaS9jbGllbnQvYXV0aC9sb2dpbiIsImlhdCI6MTc1ODU1MjM2NCwibmJmIjoxNzU4NTUyMzY0LCJqdGkiOiJzc1liMjQxQTN0RTZrQmFxIiwic3ViIjoiOWY5YWYwNWQtYzUxNS00MzJhLWI1YmQtYjNmYTIzMzc0MTRmIiwicHJ2IjoiNDFlZmI3YmFkN2Y2ZjYzMmUyNDA1YmQzYTc5M2I4YTZiZGVjNjc3NyJ9.RTyd9ELn_WFXlJzrHWCVnEBuG1DGbwdAzMtKJhyXsf4\\\"\",\"user\":\"{\\\"id\\\":\\\"9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"email\\\":\\\"mcdurana+4@jlabs.team\\\",\\\"first_name\\\":\\\"Mark Christian\\\",\\\"last_name\\\":\\\"Durana\\\",\\\"full_name\\\":\\\"Mark Christian Durana\\\",\\\"image\\\":null,\\\"type\\\":\\\"user\\\",\\\"is_binded\\\":false,\\\"allowed_change_password\\\":true,\\\"user_binding_type\\\":null,\\\"is_verified\\\":true,\\\"is_onboarded\\\":true,\\\"share_link\\\":\\\"https://staging-v2.yearglance.com/share-my-calendar/9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"lead\\\":{\\\"country\\\":\\\"Philippines\\\",\\\"city\\\":\\\"Cavite\\\",\\\"industry\\\":\\\"Healthcare\\\",\\\"role\\\":\\\"Finance\\\",\\\"organization_name\\\":\\\"Texg\\\",\\\"organization_link\\\":\\\"wala\\\"},\\\"subscription\\\":{\\\"name\\\":\\\"Plan Everyone Premium (Annually)\\\",\\\"price\\\":\\\"150.00\\\",\\\"interval\\\":\\\"annually\\\",\\\"calendar_connection_limit\\\":null,\\\"remaining_days\\\":14,\\\"starts_at\\\":\\\"2025-09-08 05:25:51\\\",\\\"ends_at\\\":\\\"2026-09-08 05:25:51\\\",\\\"cancelled_at\\\":null,\\\"paid\\\":\\\"2025-09-08 05:25:51\\\",\\\"features\\\":[\\\"Monthly View\\\",\\\"Horizontal View\\\",\\\"Vertical View\\\",\\\"Customisation\\\",\\\"Share\\\",\\\"Agenda View\\\",\\\"Share Toggle Calendars\\\"],\\\"is_trial\\\":false,\\\"plan_id\\\":\\\"ccc19745-1a68-4f62-a877-128503ca86a4\\\",\\\"currency\\\":\\\"usd\\\"},\\\"language\\\":\\\"en\\\",\\\"no_prev_paid_subscription\\\":false}\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
+          "value": "{\"accessToken\":\"\\\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3N0YWdpbmctYXBpLXYyLnllYXJnbGFuY2UuY29tL2FwaS9jbGllbnQvYXV0aC9sb2dpbiIsImlhdCI6MTc1ODYwNjEzNSwibmJmIjoxNzU4NjA2MTM1LCJqdGkiOiJMQjJuZGhsdDFrQnpKNTlCIiwic3ViIjoiOWY5YWYwNWQtYzUxNS00MzJhLWI1YmQtYjNmYTIzMzc0MTRmIiwicHJ2IjoiNDFlZmI3YmFkN2Y2ZjYzMmUyNDA1YmQzYTc5M2I4YTZiZGVjNjc3NyJ9.LayVnFyEJNXtD9ccg7jRuAMmiExflSCE6j3X9NXP-hg\\\"\",\"user\":\"{\\\"id\\\":\\\"9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"email\\\":\\\"mcdurana+4@jlabs.team\\\",\\\"first_name\\\":\\\"Mark Christian\\\",\\\"last_name\\\":\\\"Durana\\\",\\\"full_name\\\":\\\"Mark Christian Durana\\\",\\\"image\\\":null,\\\"type\\\":\\\"user\\\",\\\"is_binded\\\":false,\\\"allowed_change_password\\\":true,\\\"user_binding_type\\\":null,\\\"is_verified\\\":true,\\\"is_onboarded\\\":true,\\\"share_link\\\":\\\"https://staging-v2.yearglance.com/share-my-calendar/9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"lead\\\":{\\\"country\\\":\\\"Philippines\\\",\\\"city\\\":\\\"Cavite\\\",\\\"industry\\\":\\\"Healthcare\\\",\\\"role\\\":\\\"Finance\\\",\\\"organization_name\\\":\\\"Texg\\\",\\\"organization_link\\\":\\\"wala\\\"},\\\"subscription\\\":{\\\"name\\\":\\\"Plan Everyone Premium (Annually)\\\",\\\"price\\\":\\\"150.00\\\",\\\"interval\\\":\\\"annually\\\",\\\"calendar_connection_limit\\\":null,\\\"remaining_days\\\":15,\\\"starts_at\\\":\\\"2025-09-08 05:25:51\\\",\\\"ends_at\\\":\\\"2026-09-08 05:25:51\\\",\\\"cancelled_at\\\":null,\\\"paid\\\":\\\"2025-09-08 05:25:51\\\",\\\"features\\\":[\\\"Monthly View\\\",\\\"Horizontal View\\\",\\\"Vertical View\\\",\\\"Customisation\\\",\\\"Share\\\",\\\"Agenda View\\\",\\\"Share Toggle Calendars\\\"],\\\"is_trial\\\":false,\\\"plan_id\\\":\\\"ccc19745-1a68-4f62-a877-128503ca86a4\\\",\\\"currency\\\":\\\"usd\\\"},\\\"language\\\":\\\"en\\\",\\\"no_prev_paid_subscription\\\":false}\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
         },
         {
           "name": "react-web-ts-version",
-          "value": "1758187111665"
+          "value": "1758597198913"
         },
         {
           "name": "persist:UserCalendar",
@@ -83,7 +83,7 @@
         },
         {
           "name": "DEVICE_UUID",
-          "value": "15447607-3bc5-4866-92b4-fa327c281ed2"
+          "value": "822a51a1-36d9-4d79-ab8f-60af65e9c43e"
         },
         {
           "name": "persist:Calendar",
@@ -91,11 +91,11 @@
         },
         {
           "name": "uuid",
-          "value": "bd3203e1-5b88-4875-b572-414339720c1b"
+          "value": "5bcc931f-34c4-4cf7-b008-210bbb07ae7d"
         },
         {
           "name": "persist:root",
-          "value": "{\"App\":\"{\\\"theme\\\":\\\"calendar-light\\\",\\\"chatWidgetVisible\\\":false,\\\"_persist\\\":{\\\"version\\\":-1,\\\"rehydrated\\\":true}}\",\"Auth\":\"{\\\"accessToken\\\":\\\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3N0YWdpbmctYXBpLXYyLnllYXJnbGFuY2UuY29tL2FwaS9jbGllbnQvYXV0aC9sb2dpbiIsImlhdCI6MTc1ODU1MjM2NCwibmJmIjoxNzU4NTUyMzY0LCJqdGkiOiJzc1liMjQxQTN0RTZrQmFxIiwic3ViIjoiOWY5YWYwNWQtYzUxNS00MzJhLWI1YmQtYjNmYTIzMzc0MTRmIiwicHJ2IjoiNDFlZmI3YmFkN2Y2ZjYzMmUyNDA1YmQzYTc5M2I4YTZiZGVjNjc3NyJ9.RTyd9ELn_WFXlJzrHWCVnEBuG1DGbwdAzMtKJhyXsf4\\\",\\\"user\\\":{\\\"id\\\":\\\"9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"email\\\":\\\"mcdurana+4@jlabs.team\\\",\\\"first_name\\\":\\\"Mark Christian\\\",\\\"last_name\\\":\\\"Durana\\\",\\\"full_name\\\":\\\"Mark Christian Durana\\\",\\\"image\\\":null,\\\"type\\\":\\\"user\\\",\\\"is_binded\\\":false,\\\"allowed_change_password\\\":true,\\\"user_binding_type\\\":null,\\\"is_verified\\\":true,\\\"is_onboarded\\\":true,\\\"share_link\\\":\\\"https://staging-v2.yearglance.com/share-my-calendar/9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"lead\\\":{\\\"country\\\":\\\"Philippines\\\",\\\"city\\\":\\\"Cavite\\\",\\\"industry\\\":\\\"Healthcare\\\",\\\"role\\\":\\\"Finance\\\",\\\"organization_name\\\":\\\"Texg\\\",\\\"organization_link\\\":\\\"wala\\\"},\\\"subscription\\\":{\\\"name\\\":\\\"Plan Everyone Premium (Annually)\\\",\\\"price\\\":\\\"150.00\\\",\\\"interval\\\":\\\"annually\\\",\\\"calendar_connection_limit\\\":null,\\\"remaining_days\\\":14,\\\"starts_at\\\":\\\"2025-09-08 05:25:51\\\",\\\"ends_at\\\":\\\"2026-09-08 05:25:51\\\",\\\"cancelled_at\\\":null,\\\"paid\\\":\\\"2025-09-08 05:25:51\\\",\\\"features\\\":[\\\"Monthly View\\\",\\\"Horizontal View\\\",\\\"Vertical View\\\",\\\"Customisation\\\",\\\"Share\\\",\\\"Agenda View\\\",\\\"Share Toggle Calendars\\\"],\\\"is_trial\\\":false,\\\"plan_id\\\":\\\"ccc19745-1a68-4f62-a877-128503ca86a4\\\",\\\"currency\\\":\\\"usd\\\"},\\\"language\\\":\\\"en\\\",\\\"no_prev_paid_subscription\\\":false},\\\"errors\\\":{},\\\"codeValidityInSeconds\\\":120,\\\"forgotPassword\\\":{\\\"email\\\":\\\"\\\",\\\"timestamp\\\":\\\"\\\",\\\"account_reset_id\\\":\\\"\\\",\\\"verification_code\\\":\\\"\\\"},\\\"referrer\\\":{},\\\"account\\\":{\\\"id\\\":\\\"9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"email\\\":\\\"mcdurana+4@jlabs.team\\\",\\\"first_name\\\":\\\"Mark Christian\\\",\\\"last_name\\\":\\\"Durana\\\",\\\"full_name\\\":\\\"Mark Christian Durana\\\",\\\"image\\\":null,\\\"type\\\":\\\"user\\\",\\\"is_binded\\\":false,\\\"allowed_change_password\\\":true,\\\"user_binding_type\\\":null,\\\"is_verified\\\":true,\\\"is_onboarded\\\":true,\\\"share_link\\\":\\\"https://staging-v2.yearglance.com/share-my-calendar/9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"lead\\\":{\\\"country\\\":\\\"Philippines\\\",\\\"city\\\":\\\"Cavite\\\",\\\"industry\\\":\\\"Healthcare\\\",\\\"role\\\":\\\"Finance\\\",\\\"organization_name\\\":\\\"Texg\\\",\\\"organization_link\\\":\\\"wala\\\"},\\\"subscription\\\":{\\\"name\\\":\\\"Plan Everyone Premium (Annually)\\\",\\\"price\\\":\\\"150.00\\\",\\\"interval\\\":\\\"annually\\\",\\\"calendar_connection_limit\\\":null,\\\"remaining_days\\\":14,\\\"starts_at\\\":\\\"2025-09-08 05:25:51\\\",\\\"ends_at\\\":\\\"2026-09-08 05:25:51\\\",\\\"cancelled_at\\\":null,\\\"paid\\\":\\\"2025-09-08 05:25:51\\\",\\\"features\\\":[\\\"Monthly View\\\",\\\"Horizontal View\\\",\\\"Vertical View\\\",\\\"Customisation\\\",\\\"Share\\\",\\\"Agenda View\\\",\\\"Share Toggle Calendars\\\"],\\\"is_trial\\\":false,\\\"plan_id\\\":\\\"ccc19745-1a68-4f62-a877-128503ca86a4\\\",\\\"currency\\\":\\\"usd\\\"},\\\"language\\\":\\\"en\\\",\\\"no_prev_paid_subscription\\\":false},\\\"_persist\\\":{\\\"version\\\":-1,\\\"rehydrated\\\":true}}\",\"User\":\"{}\",\"Shared\":\"{\\\"loading\\\":false,\\\"addEventModalVisible\\\":false,\\\"printModalVisible\\\":false,\\\"viewEventModalVisible\\\":false,\\\"updateEventModalVisible\\\":false,\\\"calendarSidebarOpen\\\":false,\\\"customizeModalVisible\\\":false,\\\"shareModalVisible\\\":false,\\\"deleteEventModalVisible\\\":false,\\\"timezoneModalVisible\\\":false,\\\"timezoneModalData\\\":{\\\"startTimezone\\\":\\\"Asia/Manila\\\",\\\"endTimezone\\\":\\\"Asia/Manila\\\",\\\"referrer\\\":\\\"\\\"}}\",\"Calendar\":\"{\\\"time\\\":\\\"year\\\",\\\"yearlyView\\\":\\\"monthly\\\",\\\"viewedDates\\\":{\\\"start\\\":\\\"2024-12-31T16:00:00.000Z\\\",\\\"end\\\":\\\"2025-12-31T15:59:59.999Z\\\"},\\\"calendars\\\":[],\\\"calendarEvents\\\":{},\\\"selectedCalendars\\\":[],\\\"isImporting\\\":false,\\\"selectedCategories\\\":[],\\\"syncing\\\":false,\\\"backgroundCalendar\\\":null,\\\"yearsSynced\\\":[],\\\"shouldGetEvents\\\":true,\\\"page\\\":1,\\\"_persist\\\":{\\\"version\\\":-1,\\\"rehydrated\\\":true}}\",\"Customization\":\"{\\\"settings\\\":{\\\"startOfMonth\\\":\\\"January\\\",\\\"noOfMonths\\\":\\\"12\\\",\\\"noOfEvents\\\":\\\"6\\\",\\\"offDays\\\":null,\\\"startingDay\\\":\\\"Sunday\\\",\\\"isCurrentMonthEnabled\\\":false},\\\"theme\\\":{\\\"selected\\\":\\\"calendar-light\\\",\\\"cellColors\\\":{\\\"current_date\\\":\\\"#D3DDE6\\\",\\\"work_dates\\\":\\\"#F0F1F0\\\",\\\"off_days\\\":\\\"#F8DFDF\\\"},\\\"textColors\\\":{\\\"date\\\":\\\"#072644\\\",\\\"week\\\":\\\"#8E9796\\\",\\\"month\\\":\\\"#FF6558\\\"}},\\\"display\\\":{\\\"fontSize\\\":\\\"medium\\\",\\\"density\\\":\\\"comfortable\\\",\\\"singleLineEvents\\\":true,\\\"allDayEvents\\\":false,\\\"hideOffDayEvents\\\":false,\\\"weekNumber\\\":false,\\\"alignByDate\\\":false,\\\"dayNames\\\":true,\\\"showLeadDay\\\":false},\\\"darkMode\\\":false,\\\"plannerTitle\\\":\\\"\\\"}\",\"Print\":\"{\\\"headers\\\":20,\\\"labels\\\":20,\\\"body\\\":15,\\\"border\\\":2,\\\"printBorder\\\":true,\\\"isPrinting\\\":false}\",\"UserCalendar\":\"{\\\"time\\\":\\\"year\\\",\\\"yearlyView\\\":\\\"monthly\\\",\\\"viewedDates\\\":{\\\"start\\\":\\\"2024-12-31T16:00:00.000Z\\\",\\\"end\\\":\\\"2025-12-31T15:59:59.999Z\\\"},\\\"calendars\\\":[],\\\"calendarEvents\\\":{},\\\"selectedCalendars\\\":[],\\\"selectedCategories\\\":[],\\\"customization\\\":{\\\"darkMode\\\":false,\\\"settings\\\":{\\\"startOfMonth\\\":\\\"January\\\",\\\"noOfMonths\\\":\\\"12\\\",\\\"noOfEvents\\\":\\\"6\\\",\\\"offDays\\\":null,\\\"startingDay\\\":\\\"Sunday\\\"},\\\"theme\\\":{\\\"selected\\\":\\\"calendar-light\\\",\\\"cellColors\\\":{\\\"current_date\\\":\\\"#D3DDE6\\\",\\\"work_dates\\\":\\\"#F0F1F0\\\",\\\"off_days\\\":\\\"#F8DFDF\\\"},\\\"textColors\\\":{\\\"date\\\":\\\"#072644\\\",\\\"week\\\":\\\"#8E9796\\\",\\\"month\\\":\\\"#FF6558\\\"}},\\\"display\\\":{\\\"fontSize\\\":\\\"medium\\\",\\\"density\\\":\\\"comfortable\\\",\\\"singleLineEvents\\\":true,\\\"allDayEvents\\\":false,\\\"hideOffDayEvents\\\":false,\\\"weekNumber\\\":false,\\\"alignByDate\\\":false,\\\"dayNames\\\":true,\\\"showLeadDay\\\":false}},\\\"page\\\":1,\\\"_persist\\\":{\\\"version\\\":-1,\\\"rehydrated\\\":true}}\",\"Billing\":\"{\\\"updateModalVisible\\\":false,\\\"upgradeSubscriptionVisible\\\":false,\\\"downgradeSubscriptionVisible\\\":false,\\\"selectedPlan\\\":null,\\\"plans\\\":[],\\\"currentPlan\\\":null,\\\"cancelSubscriptionVisible\\\":false}\",\"Notification\":\"{\\\"notificationBadge\\\":0,\\\"allNotifications\\\":0}\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
+          "value": "{\"App\":\"{\\\"theme\\\":\\\"calendar-light\\\",\\\"chatWidgetVisible\\\":false,\\\"_persist\\\":{\\\"version\\\":-1,\\\"rehydrated\\\":true}}\",\"Auth\":\"{\\\"accessToken\\\":\\\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3N0YWdpbmctYXBpLXYyLnllYXJnbGFuY2UuY29tL2FwaS9jbGllbnQvYXV0aC9sb2dpbiIsImlhdCI6MTc1ODYwNjEzNSwibmJmIjoxNzU4NjA2MTM1LCJqdGkiOiJMQjJuZGhsdDFrQnpKNTlCIiwic3ViIjoiOWY5YWYwNWQtYzUxNS00MzJhLWI1YmQtYjNmYTIzMzc0MTRmIiwicHJ2IjoiNDFlZmI3YmFkN2Y2ZjYzMmUyNDA1YmQzYTc5M2I4YTZiZGVjNjc3NyJ9.LayVnFyEJNXtD9ccg7jRuAMmiExflSCE6j3X9NXP-hg\\\",\\\"user\\\":{\\\"id\\\":\\\"9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"email\\\":\\\"mcdurana+4@jlabs.team\\\",\\\"first_name\\\":\\\"Mark Christian\\\",\\\"last_name\\\":\\\"Durana\\\",\\\"full_name\\\":\\\"Mark Christian Durana\\\",\\\"image\\\":null,\\\"type\\\":\\\"user\\\",\\\"is_binded\\\":false,\\\"allowed_change_password\\\":true,\\\"user_binding_type\\\":null,\\\"is_verified\\\":true,\\\"is_onboarded\\\":true,\\\"share_link\\\":\\\"https://staging-v2.yearglance.com/share-my-calendar/9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"lead\\\":{\\\"country\\\":\\\"Philippines\\\",\\\"city\\\":\\\"Cavite\\\",\\\"industry\\\":\\\"Healthcare\\\",\\\"role\\\":\\\"Finance\\\",\\\"organization_name\\\":\\\"Texg\\\",\\\"organization_link\\\":\\\"wala\\\"},\\\"subscription\\\":{\\\"name\\\":\\\"Plan Everyone Premium (Annually)\\\",\\\"price\\\":\\\"150.00\\\",\\\"interval\\\":\\\"annually\\\",\\\"calendar_connection_limit\\\":null,\\\"remaining_days\\\":15,\\\"starts_at\\\":\\\"2025-09-08 05:25:51\\\",\\\"ends_at\\\":\\\"2026-09-08 05:25:51\\\",\\\"cancelled_at\\\":null,\\\"paid\\\":\\\"2025-09-08 05:25:51\\\",\\\"features\\\":[\\\"Monthly View\\\",\\\"Horizontal View\\\",\\\"Vertical View\\\",\\\"Customisation\\\",\\\"Share\\\",\\\"Agenda View\\\",\\\"Share Toggle Calendars\\\"],\\\"is_trial\\\":false,\\\"plan_id\\\":\\\"ccc19745-1a68-4f62-a877-128503ca86a4\\\",\\\"currency\\\":\\\"usd\\\"},\\\"language\\\":\\\"en\\\",\\\"no_prev_paid_subscription\\\":false},\\\"errors\\\":{},\\\"codeValidityInSeconds\\\":120,\\\"forgotPassword\\\":{\\\"email\\\":\\\"\\\",\\\"timestamp\\\":\\\"\\\",\\\"account_reset_id\\\":\\\"\\\",\\\"verification_code\\\":\\\"\\\"},\\\"referrer\\\":{},\\\"account\\\":{\\\"id\\\":\\\"9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"email\\\":\\\"mcdurana+4@jlabs.team\\\",\\\"first_name\\\":\\\"Mark Christian\\\",\\\"last_name\\\":\\\"Durana\\\",\\\"full_name\\\":\\\"Mark Christian Durana\\\",\\\"image\\\":null,\\\"type\\\":\\\"user\\\",\\\"is_binded\\\":false,\\\"allowed_change_password\\\":true,\\\"user_binding_type\\\":null,\\\"is_verified\\\":true,\\\"is_onboarded\\\":true,\\\"share_link\\\":\\\"https://staging-v2.yearglance.com/share-my-calendar/9f9af05d-c515-432a-b5bd-b3fa2337414f\\\",\\\"lead\\\":{\\\"country\\\":\\\"Philippines\\\",\\\"city\\\":\\\"Cavite\\\",\\\"industry\\\":\\\"Healthcare\\\",\\\"role\\\":\\\"Finance\\\",\\\"organization_name\\\":\\\"Texg\\\",\\\"organization_link\\\":\\\"wala\\\"},\\\"subscription\\\":{\\\"name\\\":\\\"Plan Everyone Premium (Annually)\\\",\\\"price\\\":\\\"150.00\\\",\\\"interval\\\":\\\"annually\\\",\\\"calendar_connection_limit\\\":null,\\\"remaining_days\\\":15,\\\"starts_at\\\":\\\"2025-09-08 05:25:51\\\",\\\"ends_at\\\":\\\"2026-09-08 05:25:51\\\",\\\"cancelled_at\\\":null,\\\"paid\\\":\\\"2025-09-08 05:25:51\\\",\\\"features\\\":[\\\"Monthly View\\\",\\\"Horizontal View\\\",\\\"Vertical View\\\",\\\"Customisation\\\",\\\"Share\\\",\\\"Agenda View\\\",\\\"Share Toggle Calendars\\\"],\\\"is_trial\\\":false,\\\"plan_id\\\":\\\"ccc19745-1a68-4f62-a877-128503ca86a4\\\",\\\"currency\\\":\\\"usd\\\"},\\\"language\\\":\\\"en\\\",\\\"no_prev_paid_subscription\\\":false},\\\"_persist\\\":{\\\"version\\\":-1,\\\"rehydrated\\\":true}}\",\"User\":\"{}\",\"Shared\":\"{\\\"loading\\\":false,\\\"addEventModalVisible\\\":false,\\\"printModalVisible\\\":false,\\\"viewEventModalVisible\\\":false,\\\"updateEventModalVisible\\\":false,\\\"calendarSidebarOpen\\\":false,\\\"customizeModalVisible\\\":false,\\\"shareModalVisible\\\":false,\\\"deleteEventModalVisible\\\":false,\\\"timezoneModalVisible\\\":false,\\\"timezoneModalData\\\":{\\\"startTimezone\\\":\\\"Asia/Manila\\\",\\\"endTimezone\\\":\\\"Asia/Manila\\\",\\\"referrer\\\":\\\"\\\"}}\",\"Calendar\":\"{\\\"time\\\":\\\"year\\\",\\\"yearlyView\\\":\\\"monthly\\\",\\\"viewedDates\\\":{\\\"start\\\":\\\"2024-12-31T16:00:00.000Z\\\",\\\"end\\\":\\\"2025-12-31T15:59:59.999Z\\\"},\\\"calendars\\\":[],\\\"calendarEvents\\\":{},\\\"selectedCalendars\\\":[],\\\"isImporting\\\":false,\\\"selectedCategories\\\":[],\\\"syncing\\\":false,\\\"backgroundCalendar\\\":null,\\\"yearsSynced\\\":[],\\\"shouldGetEvents\\\":true,\\\"page\\\":1,\\\"_persist\\\":{\\\"version\\\":-1,\\\"rehydrated\\\":true}}\",\"Customization\":\"{\\\"settings\\\":{\\\"startOfMonth\\\":\\\"January\\\",\\\"noOfMonths\\\":\\\"12\\\",\\\"noOfEvents\\\":\\\"6\\\",\\\"offDays\\\":null,\\\"startingDay\\\":\\\"Sunday\\\",\\\"isCurrentMonthEnabled\\\":false},\\\"theme\\\":{\\\"selected\\\":\\\"calendar-light\\\",\\\"cellColors\\\":{\\\"current_date\\\":\\\"#D3DDE6\\\",\\\"work_dates\\\":\\\"#F0F1F0\\\",\\\"off_days\\\":\\\"#F8DFDF\\\"},\\\"textColors\\\":{\\\"date\\\":\\\"#072644\\\",\\\"week\\\":\\\"#8E9796\\\",\\\"month\\\":\\\"#FF6558\\\"}},\\\"display\\\":{\\\"fontSize\\\":\\\"medium\\\",\\\"density\\\":\\\"comfortable\\\",\\\"singleLineEvents\\\":true,\\\"allDayEvents\\\":false,\\\"hideOffDayEvents\\\":false,\\\"weekNumber\\\":false,\\\"alignByDate\\\":false,\\\"dayNames\\\":true,\\\"showLeadDay\\\":false},\\\"darkMode\\\":false,\\\"plannerTitle\\\":\\\"\\\"}\",\"Print\":\"{\\\"headers\\\":20,\\\"labels\\\":20,\\\"body\\\":15,\\\"border\\\":2,\\\"printBorder\\\":true,\\\"isPrinting\\\":false}\",\"UserCalendar\":\"{\\\"time\\\":\\\"year\\\",\\\"yearlyView\\\":\\\"monthly\\\",\\\"viewedDates\\\":{\\\"start\\\":\\\"2024-12-31T16:00:00.000Z\\\",\\\"end\\\":\\\"2025-12-31T15:59:59.999Z\\\"},\\\"calendars\\\":[],\\\"calendarEvents\\\":{},\\\"selectedCalendars\\\":[],\\\"selectedCategories\\\":[],\\\"customization\\\":{\\\"darkMode\\\":false,\\\"settings\\\":{\\\"startOfMonth\\\":\\\"January\\\",\\\"noOfMonths\\\":\\\"12\\\",\\\"noOfEvents\\\":\\\"6\\\",\\\"offDays\\\":null,\\\"startingDay\\\":\\\"Sunday\\\"},\\\"theme\\\":{\\\"selected\\\":\\\"calendar-light\\\",\\\"cellColors\\\":{\\\"current_date\\\":\\\"#D3DDE6\\\",\\\"work_dates\\\":\\\"#F0F1F0\\\",\\\"off_days\\\":\\\"#F8DFDF\\\"},\\\"textColors\\\":{\\\"date\\\":\\\"#072644\\\",\\\"week\\\":\\\"#8E9796\\\",\\\"month\\\":\\\"#FF6558\\\"}},\\\"display\\\":{\\\"fontSize\\\":\\\"medium\\\",\\\"density\\\":\\\"comfortable\\\",\\\"singleLineEvents\\\":true,\\\"allDayEvents\\\":false,\\\"hideOffDayEvents\\\":false,\\\"weekNumber\\\":false,\\\"alignByDate\\\":false,\\\"dayNames\\\":true,\\\"showLeadDay\\\":false}},\\\"page\\\":1,\\\"_persist\\\":{\\\"version\\\":-1,\\\"rehydrated\\\":true}}\",\"Billing\":\"{\\\"updateModalVisible\\\":false,\\\"upgradeSubscriptionVisible\\\":false,\\\"downgradeSubscriptionVisible\\\":false,\\\"selectedPlan\\\":null,\\\"plans\\\":[],\\\"currentPlan\\\":null,\\\"cancelSubscriptionVisible\\\":false}\",\"Notification\":\"{\\\"notificationBadge\\\":0,\\\"allNotifications\\\":0}\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
         }
       ]
     }

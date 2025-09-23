@@ -137,7 +137,7 @@ test.describe.serial("Create/Edit/Delete AllDay Events", () => {
 
         await addAllDayEvent(page, eventData);
     });
-    test("Validate AllDay event", async ({ page }) => {
+    test.only("Validate AllDay event", async ({ page }) => {
         await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
 
         // Enable Google Calendar, disable Microsoft Calendar

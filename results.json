@@ -1,0 +1,228 @@
+[dotenv@17.2.2
+] injecting env (12) from .env -- tip: 📡 observe env with Radar: https: //dotenvx.com/radar
+[dotenv@17.2.2
+] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https: //dotenvx.com/precommit
+{
+    "config": {
+        "configFile": "C:\\Users\\Mark\\OneDrive\\Desktop\\Automation YG\\playwright.config.js",
+        "rootDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/tests",
+        "forbidOnly": false,
+        "fullyParallel": true,
+        "globalSetup": null,
+        "globalTeardown": null,
+        "globalTimeout": 0,
+        "grep": {},
+        "grepInvert": null,
+        "maxFailures": 0,
+        "metadata": {
+            "actualWorkers": 1
+        },
+        "preserveOutput": "always",
+        "reporter": [
+            [
+                "json"
+            ]
+        ],
+        "reportSlowTests": {
+            "max": 5,
+            "threshold": 300000
+        },
+        "quiet": false,
+        "projects": [
+            {
+                "outputDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/test-results",
+                "repeatEach": 1,
+                "retries": 0,
+                "metadata": {
+                    "actualWorkers": 1
+                },
+                "id": "setup",
+                "name": "setup",
+                "testDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/tests",
+                "testIgnore": [],
+                "testMatch": [
+                    "/.*\\.setup\\.ts/"
+                ],
+                "timeout": 45000
+            },
+            {
+                "outputDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/test-results",
+                "repeatEach": 1,
+                "retries": 0,
+                "metadata": {
+                    "actualWorkers": 1
+                },
+                "id": "behind-login",
+                "name": "behind-login",
+                "testDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/tests",
+                "testIgnore": [
+                    "**/RegisterPageTest.spec.js",
+                    "**/GoogleLogin.spec.js",
+                    "**/InvalidLogin.spec.js"
+                ],
+                "testMatch": [
+                    "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+                ],
+                "timeout": 45000
+            },
+            {
+                "outputDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/test-results",
+                "repeatEach": 1,
+                "retries": 0,
+                "metadata": {
+                    "actualWorkers": 1
+                },
+                "id": "public",
+                "name": "public",
+                "testDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/tests",
+                "testIgnore": [],
+                "testMatch": [
+                    "**/RegisterPageTest.spec.js",
+                    "**/GoogleLogin.spec.js",
+                    "**/InvalidLogin.spec.js"
+                ],
+                "timeout": 45000
+            }
+        ],
+        "shard": null,
+        "updateSnapshots": "missing",
+        "updateSourceMethod": "patch",
+        "version": "1.55.0",
+        "workers": 1,
+        "webServer": null
+    },
+    "suites": [
+        {
+            "title": "login.setup.ts",
+            "file": "login.setup.ts",
+            "column": 0,
+            "line": 0,
+            "specs": [
+                {
+                    "title": "Write login session data",
+                    "ok": true,
+                    "tags": [],
+                    "tests": [
+                        {
+                            "timeout": 45000,
+                            "annotations": [],
+                            "expectedStatus": "passed",
+                            "projectId": "setup",
+                            "projectName": "setup",
+                            "results": [
+                                {
+                                    "workerIndex": 0,
+                                    "parallelIndex": 0,
+                                    "status": "passed",
+                                    "duration": 17397,
+                                    "errors": [],
+                                    "stdout": [
+                                        {
+                                            "text": "First password failed, retrying with backup...\n"
+                                        }
+                                    ],
+                                    "stderr": [],
+                                    "retry": 0,
+                                    "startTime": "2025-09-23T05:42:01.487Z",
+                                    "annotations": [],
+                                    "attachments": []
+                                }
+                            ],
+                            "status": "expected"
+                        }
+                    ],
+                    "id": "deed6908e1ee4c16d23d-5c1432ad15ab034cac4b",
+                    "file": "login.setup.ts",
+                    "line": 4,
+                    "column": 6
+                }
+            ]
+        },
+        {
+            "title": "EventLifecycle.spec.js",
+            "file": "EventLifecycle.spec.js",
+            "column": 0,
+            "line": 0,
+            "specs": [],
+            "suites": [
+                {
+                    "title": "Create/Edit/Delete AllDay Events",
+                    "file": "EventLifecycle.spec.js",
+                    "line": 126,
+                    "column": 15,
+                    "specs": [
+                        {
+                            "title": "Validate AllDay event",
+                            "ok": false,
+                            "tags": [],
+                            "tests": [
+                                {
+                                    "timeout": 45000,
+                                    "annotations": [],
+                                    "expectedStatus": "passed",
+                                    "projectId": "behind-login",
+                                    "projectName": "behind-login",
+                                    "results": [
+                                        {
+                                            "workerIndex": 1,
+                                            "parallelIndex": 0,
+                                            "status": "timedOut",
+                                            "duration": 45261,
+                                            "error": {
+                                                "message": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m",
+                                                "stack": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
+                                            },
+                                            "errors": [
+                                                {
+                                                    "message": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
+                                                },
+                                                {
+                                                    "location": {
+                                                        "file": "C:\\Users\\Mark\\OneDrive\\Desktop\\Automation YG\\Helpers.spec.js",
+                                                        "column": 10,
+                                                        "line": 163
+                                                    },
+                                                    "message": "Error: locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /All Day Events/ }).last()\u001b[22m\n\n\n   at ..\\Helpers.spec.js:163\n\n  161 |     await page.getByRole('button', { name: new RegExp(eventName) })\n  162 |         .last()\n> 163 |         .click({ timeout: 30000 });\n      |          ^\n  164 |\n  165 |     // await page.getByRole('button', { name: `${eventName} Sep 4, All` }, { timeout: 30000 }).first().click();\n  166 |\n    at validateAllDayEvent (C:\\Users\\Mark\\OneDrive\\Desktop\\Automation YG\\Helpers.spec.js:163:10)\n    at C:\\Users\\Mark\\OneDrive\\Desktop\\Automation YG\\tests\\EventLifecycle.spec.js:156:9"
+                                                }
+                                            ],
+                                            "stdout": [
+                                                {
+                                                    "text": "Test finished\n"
+                                                }
+                                            ],
+                                            "stderr": [],
+                                            "retry": 0,
+                                            "startTime": "2025-09-23T05:42:20.714Z",
+                                            "annotations": [],
+                                            "attachments": [
+                                                {
+                                                    "name": "screenshot",
+                                                    "contentType": "image/png",
+                                                    "path": "C:\\Users\\Mark\\OneDrive\\Desktop\\Automation YG\\test-results\\EventLifecycle-Create-Edit-aad92-vents-Validate-AllDay-event-behind-login\\test-failed-1.png"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "status": "unexpected"
+                                }
+                            ],
+                            "id": "48e974e8c5fc5b0b262a-a766d0da00a6f30321c4",
+                            "file": "EventLifecycle.spec.js",
+                            "line": 140,
+                            "column": 10
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "errors": [],
+    "stats": {
+        "startTime": "2025-09-23T05:42:00.052Z",
+        "duration": 66232.001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+    }
+}

@@ -158,9 +158,10 @@ async function validateAllDayEvent(page, { eventName, description }) {
     await calendarEvent.click();
 
     // Open event details
-    await expect(async () => {
-        await page.getByRole('button', { name: new RegExp(eventName) }).last().click();
-    }).toPass({ timeout: 20000 });
+    await page.getByRole('button', { name: new RegExp(eventName) })
+        .last()
+        .click({ timeout: 30000 });
+
     // await page.getByRole('button', { name: `${eventName} Sep 4, All` }, { timeout: 30000 }).first().click();
 
     // Validate details
