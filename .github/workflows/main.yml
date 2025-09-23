@@ -68,7 +68,7 @@ jobs:
 
             -------------------------------------------------------------------
             🕵️ Instructions for viewing Playwright trace files:
-            1. Download the workflow artifact named **playwright-all-reports** from this run:
+            1. Download the workflow artifact named **playwright-report** from this run:
               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
             2. Extract the ZIP file and locate the `test-results` folder.
             3. Inside, you’ll find `trace-<hash>.zip` files for each test.
