@@ -84,12 +84,23 @@ jobs:
           if [ -z "$skipped_tests" ]; then skipped_tests="None"; fi
 
           # Export to env for email step
-          echo "PASSED=$passed" >> $GITHUB_ENV
-          echo "FAILED=$failed" >> $GITHUB_ENV
-          echo "SKIPPED=$skipped" >> $GITHUB_ENV
-          echo "PASSED_TESTS=$passed_tests" >> $GITHUB_ENV
-          echo "FAILED_TESTS=$failed_tests" >> $GITHUB_ENV
-          echo "SKIPPED_TESTS=$skipped_tests" >> $GITHUB_ENV
+                {
+          echo "PASSED=$passed"
+          echo "FAILED=$failed"
+          echo "SKIPPED=$skipped"
+
+          echo "PASSED_TESTS<<EOF"
+          echo "$passed_tests"
+          echo "EOF"
+
+          echo "FAILED_TESTS<<EOF"
+          echo "$failed_tests"
+          echo "EOF"
+
+          echo "SKIPPED_TESTS<<EOF"
+          echo "$skipped_tests"
+          echo "EOF"
+          } >> $GITHUB_ENV
 
 
 
