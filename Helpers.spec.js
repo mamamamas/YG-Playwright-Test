@@ -85,10 +85,9 @@ async function validateMultiDayEvent(page, { eventName, description }) {
     await calendarEvent.click();
 
     // Open event details
-    await expect(async () => {
-        await page.getByRole('button', { name: new RegExp(eventName) }).last().click();
-    }).toPass({ timeout: 20000 });
-
+    await page.getByRole('button', { name: new RegExp(eventName) })
+        .last()
+        .click({ timeout: 30000 });
     // Validate details
     const modal = page.locator('#view-event-modal');
     await expect(modal).toContainText(eventName);
