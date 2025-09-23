@@ -36,18 +36,19 @@ jobs:
 
       # 🔹 Run tests with JSON reporter
       - name: Run Playwright tests
-        run: npx playwright test --reporter=json > results.json || true
+        run: npx playwright test --reporter=list,json > results.json || true
+
 
 
       # 🔹 Parse test summary + failed tests
       - name: Parse test summary
         id: summary
         run: |
-          passed=$(jq '.suites[].specs[].tests[].results[] | select(.status=="passed") | .status' results.json | wc -l)
-          failed=$(jq '.suites[].specs[].tests[].results[] | select(.status=="failed") | .status' results.json | wc -l)
-          skipped=$(jq '.suites[].specs[].tests[].results[] | select(.status=="skipped") | .status' results.json | wc -l)
+          passed=$(jq '[.suites[].specs[].tests[].results[] | select(.status=="passed")] | length' results.json)
+          failed=$(jq '[.suites[].specs[].tests[].results[] | select(.status=="failed")] | length' results.json)
+          skipped=$(jq '[.suites[].specs[].tests[].results[] | select(.status=="skipped")] | length' results.json)
 
-          failed_tests=$(jq -r '.suites[].specs[].tests[] | select(.results[].status=="failed") | .title' results.json | sed ':a;N;$!ba;s/\n/\n   - /g')
+          failed_tests=$(jq -r '.suites[].specs[].tests[] | select(.results[].status=="failed") | .title' results.json | sed 's/^/   - /')
           if [ -z "$failed_tests" ]; then
             failed_tests="None 🎉"
           fi
@@ -56,6 +57,7 @@ jobs:
           echo "FAILED=$failed" >> $GITHUB_ENV
           echo "SKIPPED=$skipped" >> $GITHUB_ENV
           echo "FAILED_TESTS=$failed_tests" >> $GITHUB_ENV
+
 
 
       # 🔹 Upload report (for debugging if needed)
