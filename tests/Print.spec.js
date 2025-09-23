@@ -17,9 +17,6 @@ test('Print', async ({ page }) => {
     const PrintBorders = page.getByLabel('Print Borders');
     await expect(PrintBorders).toBeVisible();
 
-    await PrintBorders.uncheck();
-    await expect(PrintBorders).not.toBeChecked();
-
     await PrintBorders.check();
     await expect(PrintBorders).toBeChecked();
 

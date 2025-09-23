@@ -3,7 +3,7 @@ const { test, expect } = require('@playwright/test');
 
 test('Switching Calendar', async ({ page }) => {
     // Step 1: Go to the app
-    await page.goto("https://staging-v2.yearglance.com/");
+    await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
 
     // Step 2: Close backdrop if visible
     const backdrop = page.locator('.offcanvas-backdrop');

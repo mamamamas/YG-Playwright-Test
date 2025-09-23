@@ -145,5 +145,6 @@ jobs:
             Repo: ${{ github.repository }}
             Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            📎 Please see attached for the full HTML report.
+            📎  Please see attached for the full HTML report.
+            attachments: "playwright-report/index.html"
 

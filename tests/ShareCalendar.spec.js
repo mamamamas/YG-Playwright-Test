@@ -2,9 +2,10 @@ import { test, expect } from '@playwright/test';
 // import dotenv from 'dotenv';
 // dotenv.config();
 test('Share Calendar', async ({ page, context }) => {
-    await page.goto("https://staging-v2.yearglance.com/");
+    await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
     await page.locator('.offcanvas-backdrop').click();
     await page.getByRole('button', { name: 'Share' }).click();
+    await page.waitForTimeout(5000);
     await page.getByLabel('Year - Monthly').check();
     await page.getByLabel('Agenda').check();
     await page.getByLabel('Month', { exact: true }).check();
