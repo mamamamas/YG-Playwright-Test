@@ -1,8 +1,8 @@
 const { test, expect } = require('@playwright/test');
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 test("Switch views", async ({ page }) => {
-    await page.goto(process.env.API_URL);
+    await page.goto("https://staging-v2.yearglance.com/");
     await page.waitForLoadState('networkidle');
 
     await page.locator('.offcanvas-backdrop').click();

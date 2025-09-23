@@ -1,9 +1,9 @@
 const { test, expect } = require('@playwright/test');
-require('dotenv').config();
+// require('dotenv').config();
 
 test('Switching Calendar', async ({ page }) => {
     // Step 1: Go to the app
-    await page.goto(process.env.API_URL);
+    await page.goto("https://staging-v2.yearglance.com/");
 
     // Step 2: Close backdrop if visible
     const backdrop = page.locator('.offcanvas-backdrop');

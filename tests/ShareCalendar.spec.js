@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 test('Share Calendar', async ({ page, context }) => {
-    await page.goto(process.env.API_URL);
+    await page.goto("https://staging-v2.yearglance.com/");
     await page.locator('.offcanvas-backdrop').click();
     await page.getByRole('button', { name: 'Share' }).click();
     await page.getByLabel('Year - Monthly').check();

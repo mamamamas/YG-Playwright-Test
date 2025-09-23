@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 
 
 test('Print', async ({ page }) => {
-    await page.goto(process.env.API_URL);
+    await page.goto("https://staging-v2.yearglance.com/");
     // await page.locator('input[name="b8397a97-e4e6-4b7d-8c90-87498c714e80"]').check();
     await page.locator('.offcanvas-backdrop').click();
     await page.getByRole('button', { name: 'Print' }).click();
@@ -29,7 +29,7 @@ test('Print', async ({ page }) => {
 test('Print about', async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
-    await page.goto(process.env.API_URL);
+    await page.goto("https://admin-staging-v2.yearglance.com/auth/login");
     // await page.locator('input[name="b8397a97-e4e6-4b7d-8c90-87498c714e80"]').check();
     await page.locator('.offcanvas-backdrop').click();
 

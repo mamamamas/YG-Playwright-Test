@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 test('Notification', async ({ page, context }) => {
     // Admin Login
-    await page.goto(process.env.ADMIN_PORTAL);
+    await page.goto("https://admin-staging-v2.yearglance.com/auth/login");
     await page.waitForTimeout(2000);
     await page.getByPlaceholder('Enter email').fill('hello@jlabs.team')
     // await page.getByRole('textbox', { name: 'Email' }).fill('hello@jlabs.team');
@@ -27,7 +27,7 @@ test('Notification', async ({ page, context }) => {
 
     // Open User Page
     const page1 = await context.newPage();
-    await page1.goto(process.env.API_URL);
+    await page1.goto("https://staging-v2.yearglance.com/");
     await page1.getByRole('dialog').click();
     await page1.locator('.offcanvas-backdrop').click();
 

@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 test.afterEach(async ({ page }) => {
     // This runs after every test
     await page.close();  // cleanup example
     console.log('Test finished');
 });
 test('Incorrect Email or Password', async ({ page }) => {
-    await page.goto(process.env.API_URL);
+    await page.goto("https://staging-v2.yearglance.com/");
     await page.getByRole('textbox', { name: 'Email' }).click();
     await page.getByRole('textbox', { name: 'Email' }).fill('mcdurana@jlabs.team');
     await page.getByRole('textbox', { name: 'Password' }).click();
@@ -18,7 +18,7 @@ test('Incorrect Email or Password', async ({ page }) => {
 
 
 test('Empty Text Field', async ({ page }) => {
-    await page.goto(process.env.API_URL);
+    await page.goto("https://staging-v2.yearglance.com/");
     await page.getByRole('textbox', { name: 'Email' }).click();
     await page.getByRole('textbox', { name: 'Email' }).fill('mcdurana@jlabs.team');
     await page.getByRole('textbox', { name: 'Password' }).click();
