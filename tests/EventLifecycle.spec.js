@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config({ quiet: true });
 const {
     validateMultiDayEvent,
     addMultiDayEvent,
@@ -22,7 +22,7 @@ test.afterEach(async ({ page }) => {
 
 test.describe.serial("Create/Edit/Delete MultiDay Events", () => {
     test("Add MULTI DAY event", async ({ page }) => {
-        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+        await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
 
         // Enable Google Calendar, disable Microsoft Calendar
         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -42,7 +42,7 @@ test.describe.serial("Create/Edit/Delete MultiDay Events", () => {
     });
 
     test("Validate MultiDay event", async ({ page }) => {
-        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+        await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
 
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(10000);
@@ -57,7 +57,7 @@ test.describe.serial("Create/Edit/Delete MultiDay Events", () => {
     });
 
     test("Edit MultiDay event", async ({ page }) => {
-        await page.goto(process.env.API_URL);
+        await page.goto("https://staging-v2.yearglance.com/");
 
         // Enable Google Calendar, disable Microsoft Calendar
         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -81,7 +81,7 @@ test.describe.serial("Create/Edit/Delete MultiDay Events", () => {
 
 
     test("Validate MultiDays event", async ({ page }) => {
-        await page.goto(process.env.API_URL);
+        await page.goto("https://staging-v2.yearglance.com/");
 
         // Enable Google Calendar, disable Microsoft Calendar
         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -102,7 +102,7 @@ test.describe.serial("Create/Edit/Delete MultiDay Events", () => {
         await validateMultiEvent(page, eventData);
     });
     test('Delete MultiDay Events', async ({ page }) => {
-        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+        await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
         // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
         // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
@@ -125,7 +125,7 @@ test.describe.serial("Create/Edit/Delete MultiDay Events", () => {
 
 test.describe.serial("Create/Edit/Delete AllDay Events", () => {
     test("Add ALL DAY event", async ({ page }) => {
-        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+        await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
         await page.locator('.offcanvas-backdrop').click();
 
         const eventData = {
@@ -138,7 +138,7 @@ test.describe.serial("Create/Edit/Delete AllDay Events", () => {
         await addAllDayEvent(page, eventData);
     });
     test("Validate AllDay event", async ({ page }) => {
-        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+        await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
 
         // Enable Google Calendar, disable Microsoft Calendar
         await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -158,7 +158,7 @@ test.describe.serial("Create/Edit/Delete AllDay Events", () => {
 
 
     test("Edit AllDay event", async ({ page }) => {
-        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+        await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
 
         // Enable Google Calendar, disable Microsoft Calendar
         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -180,7 +180,7 @@ test.describe.serial("Create/Edit/Delete AllDay Events", () => {
     });
 
     test("Validate Edited AllDays event", async ({ page }) => {
-        await page.goto(process.env.API_URL);
+        await page.goto("https://staging-v2.yearglance.com/");
 
         // Enable Google Calendar, disable Microsoft Calendar
         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -202,7 +202,7 @@ test.describe.serial("Create/Edit/Delete AllDay Events", () => {
     });
 
     test("Delete All Day Event", async ({ page }) => {
-        await page.goto(process.env.API_URL);
+        await page.goto("https://staging-v2.yearglance.com/");
         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
         // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
         // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
@@ -230,7 +230,7 @@ test.describe.serial("Create/Edit/Delete AllDay Events", () => {
 
 // test.describe.serial("Create MultiDay Events", () => {
 //     test("Add MULTI DAY event", async ({ page }) => {
-//         await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+//         await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
 
 //         // Enable Google Calendar, disable Microsoft Calendar
 //         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -250,7 +250,7 @@ test.describe.serial("Create/Edit/Delete AllDay Events", () => {
 //     });
 
 //     test("Validate MultiDay event", async ({ page }) => {
-//         await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+//         await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
 
 //         await page.locator('.offcanvas-backdrop').click();
 //         await page.waitForTimeout(10000);
@@ -267,7 +267,7 @@ test.describe.serial("Create/Edit/Delete AllDay Events", () => {
 
 // test.describe.serial("Create AllDay Events", () => {
 //     test("Add ALL DAY event", async ({ page }) => {
-//         await page.goto(process.env.API_URL);
+//         await page.goto("https://staging-v2.yearglance.com/");
 //         await page.locator('.offcanvas-backdrop').click();
 
 //         const eventData = {
@@ -289,7 +289,7 @@ test.describe.serial("Create Recurring Events", () => {
 
     for (const repeat of repeats) {
         test(`Add ${repeat} Event and validate event`, async ({ page }) => {
-            await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+            await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
             await page.locator('.offcanvas-backdrop').click();
             const eventData = {
                 eventName: `${repeat} Repeat`,
@@ -306,10 +306,10 @@ test.describe.serial("Create Recurring Events", () => {
 
     for (const repeat of repeats) {
         test(`Edit ${repeat} Event and validate event`, async ({ page }) => {
-            await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
-            await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-            // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-            await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+            await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
+            // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+            // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
+            // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
             await page.locator('.offcanvas-backdrop').click();
             await page.waitForTimeout(4000);
             const eventData = {
@@ -327,7 +327,7 @@ test.describe.serial("Create Recurring Events", () => {
     }
 
     test('Delete Daily', async ({ page }) => {
-        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+        await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
         // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
         // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
@@ -344,10 +344,10 @@ test.describe.serial("Create Recurring Events", () => {
         await expect(page.getByRole('alert').first()).toHaveText(/Event deleted successfully/, { timeout: 10000 });
     });
     test('Delete Weekly', async ({ page }) => {
-        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+        await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
         // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(5000);
         const calendarEvent = page.locator('#E-20250905');
@@ -361,10 +361,10 @@ test.describe.serial("Create Recurring Events", () => {
         await expect(page.getByRole('alert').first()).toHaveText(/Event deleted successfully/, { timeout: 10000 });
     });
     test('Delete Monthly', async ({ page }) => {
-        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+        await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
         // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(5000);
         const calendarEvent = page.locator('#E-20250905');
@@ -378,10 +378,10 @@ test.describe.serial("Create Recurring Events", () => {
         await expect(page.getByRole('alert').first()).toHaveText(/Event deleted successfully/, { timeout: 10000 });
     });
     test('Delete Annually', async ({ page }) => {
-        await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+        await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
         // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check()
-        await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
-        await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
+        // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
+        // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
         await page.locator('.offcanvas-backdrop').click();
         await page.waitForTimeout(5000);
         const calendarEvent = page.locator('#E-20250905');
@@ -400,7 +400,7 @@ test.describe.serial("Create Recurring Events", () => {
 // --- Edit Events-- -
 // test.describe.serial("Edit AllDays Events", () => {
 //     test("Edit AllDay event", async ({ page }) => {
-//         await page.goto(process.env.API_URL);
+//         await page.goto("https://staging-v2.yearglance.com/");
 
 //         // Enable Google Calendar, disable Microsoft Calendar
 //         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -422,7 +422,7 @@ test.describe.serial("Create Recurring Events", () => {
 //     });
 
 //     test("Validate Edited AllDays event", async ({ page }) => {
-//         await page.goto(process.env.API_URL);
+//         await page.goto("https://staging-v2.yearglance.com/");
 
 //         // Enable Google Calendar, disable Microsoft Calendar
 //         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -447,7 +447,7 @@ test.describe.serial("Create Recurring Events", () => {
 
 // test.describe.serial("Edit MultiDays Events", () => {
 //     test("Edit MultiDay event", async ({ page }) => {
-//         await page.goto(process.env.API_URL);
+//         await page.goto("https://staging-v2.yearglance.com/");
 
 //         // Enable Google Calendar, disable Microsoft Calendar
 //         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -471,7 +471,7 @@ test.describe.serial("Create Recurring Events", () => {
 
 
 //     test("Validate MultiDays event", async ({ page }) => {
-//         await page.goto(process.env.API_URL);
+//         await page.goto("https://staging-v2.yearglance.com/");
 
 //         // Enable Google Calendar, disable Microsoft Calendar
 //         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
@@ -498,7 +498,7 @@ test.describe.serial("Create Recurring Events", () => {
 
 //         for (const repeat of repeats) {
 //             test(`Edit ${repeat} Event and validate event`, async ({ page }) => {
-//                 await page.goto(process.env.API_URL);
+//                 await page.goto("https://staging-v2.yearglance.com/");
 //                 await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
 //                 // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
 //                 await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
@@ -524,7 +524,7 @@ test.describe.serial("Create Recurring Events", () => {
 // --- Delete Events ---
 // test.describe.serial("Delete Events", () => {
 // test("Delete All Day Event", async ({ page }) => {
-//     await page.goto(process.env.API_URL);
+//     await page.goto("https://staging-v2.yearglance.com/");
 //     // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
 //     // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
 //     // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
@@ -546,7 +546,7 @@ test.describe.serial("Create Recurring Events", () => {
 // });
 
 //     test('Delete MultiDay Events', async ({ page }) => {
-//         await page.goto(process.env.API_URL, { waitUntil: 'domcontentloaded' });
+//         await page.goto("https://staging-v2.yearglance.com/", { waitUntil: 'domcontentloaded' });
 //         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
 //         // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
 //         // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
@@ -567,7 +567,7 @@ test.describe.serial("Create Recurring Events", () => {
 //     });
 
 //     test('Delete Daily', async ({ page }) => {
-//         await page.goto(process.env.API_URL);
+//         await page.goto("https://staging-v2.yearglance.com/");
 //         // await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
 //         // // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
 //         // await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
@@ -584,7 +584,7 @@ test.describe.serial("Create Recurring Events", () => {
 //         await expect(page.getByRole('alert').first()).toHaveText(/Event deleted successfully/, { timeout: 10000 });
 //     });
 //     test('Delete Weekly', async ({ page }) => {
-//         await page.goto(process.env.API_URL);
+//         await page.goto("https://staging-v2.yearglance.com/");
 //         // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
 //         await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
 //         await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
@@ -601,7 +601,7 @@ test.describe.serial("Create Recurring Events", () => {
 //         await expect(page.getByRole('alert').first()).toHaveText(/Event deleted successfully/, { timeout: 10000 });
 //     });
 //     test('Delete Monthly', async ({ page }) => {
-//         await page.goto(process.env.API_URL);
+//         await page.goto("https://staging-v2.yearglance.com/");
 //         // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check();
 //         await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
 //         await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();
@@ -618,7 +618,7 @@ test.describe.serial("Create Recurring Events", () => {
 //         await expect(page.getByRole('alert').first()).toHaveText(/Event deleted successfully/, { timeout: 10000 });
 //     });
 //     test('Delete Annually', async ({ page }) => {
-//         await page.goto(process.env.API_URL);
+//         await page.goto("https://staging-v2.yearglance.com/");
 //         // await page.locator(`input[name="${process.env.GOOGLE_CALENDAR}"]`).check()
 //         await page.locator('input[name="0f60b054-10d0-4693-afaf-b32a34860a8d"]').check();
 //         await page.locator(`input[name="${process.env.MICROSOFT_CALENDAR}"]`).uncheck();

@@ -37,27 +37,59 @@ jobs:
       # 🔹 Run tests with JSON reporter
       - name: Run Playwright tests
         run: |
-          DOTENV_CONFIG_SILENT=true npx playwright test --reporter=json > results.json
+          npx playwright test --reporter=json > results.json
 
 
 
-      # 🔹 Parse test summary + failed tests
+      # 🔹 Parse test summary + test titles
       - name: Parse test summary
         id: summary
         run: |
-          passed=$(jq '[.suites[].specs[].tests[].results[] | select(.status=="passed")] | length' results.json)
-          failed=$(jq '[.suites[].specs[].tests[].results[] | select(.status=="failed")] | length' results.json)
-          skipped=$(jq '[.suites[].specs[].tests[].results[] | select(.status=="skipped")] | length' results.json)
+          passed=$(jq '[.. | .results? // empty | .[] | select(.status=="passed")] | length' results.json)
+          failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' results.json)
+          skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' results.json)
 
-          failed_tests=$(jq -r '.suites[].specs[].tests[] | select(.results[].status=="failed") | .title' results.json | sed 's/^/   - /')
-          if [ -z "$failed_tests" ]; then
-            failed_tests="None 🎉"
-          fi
+          # Passed test titles
+          passed_tests=$(jq -r '
+            [.. | .specs? // empty | .[] 
+              | select(any(.tests[].results[]?.status; . == "passed")) 
+              | .title] 
+            | .[]
+          ' results.json)
 
+          # Failed test titles
+          failed_tests=$(jq -r '
+            [.. | .specs? // empty | .[] 
+              | select(any(.tests[].results[]?.status; . == "failed")) 
+              | .title] 
+            | .[]
+          ' results.json)
+
+          # Skipped test titles
+          skipped_tests=$(jq -r '
+            [.. | .specs? // empty | .[] 
+              | select(any(.tests[].results[]?.status; . == "skipped")) 
+              | .title] 
+            | .[]
+          ' results.json)
+
+          echo "✅ Passed: $passed"
+          echo "❌ Failed: $failed"
+          echo "⚠️ Skipped: $skipped"
+
+          # Handle "None" cases
+          if [ -z "$passed_tests" ]; then passed_tests="None"; fi
+          if [ -z "$failed_tests" ]; then failed_tests="None"; fi
+          if [ -z "$skipped_tests" ]; then skipped_tests="None"; fi
+
+          # Export to env for email step
           echo "PASSED=$passed" >> $GITHUB_ENV
           echo "FAILED=$failed" >> $GITHUB_ENV
           echo "SKIPPED=$skipped" >> $GITHUB_ENV
+          echo "PASSED_TESTS=$passed_tests" >> $GITHUB_ENV
           echo "FAILED_TESTS=$failed_tests" >> $GITHUB_ENV
+          echo "SKIPPED_TESTS=$skipped_tests" >> $GITHUB_ENV
+
 
 
 
@@ -89,11 +121,17 @@ jobs:
             ❌ Failed: ${{ env.FAILED }}
             ⚡ Skipped: ${{ env.SKIPPED }}
 
-            🔎 Failed Tests:=
-               - ${{ env.FAILED_TESTS }}
+            ✅ Passed Tests:
+              - ${{ env.PASSED_TESTS }}
+
+            ❌ Failed Tests:
+              - ${{ env.FAILED_TESTS }}
+
+            ⚡ Skipped Tests:
+              - ${{ env.SKIPPED_TESTS }}
 
             Repo: ${{ github.repository }}
             Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-              📎 Please see attached for the full HTML report.
-          attachments: playwright-report/index.html
+            📎 Please see attached for the full HTML report.
+
