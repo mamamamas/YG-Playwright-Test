@@ -30,14 +30,16 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+    - name: Upload Playwright HTML report
+      if: always()
+      uses: actions/upload-artifact@v4
       with:
-        name: playwright-all-reports
+        name: playwright-report
         path: playwright-report/
         retention-days: 30
 
     - name: Zip Playwright HTML report
+      if: always()
       run: zip -r playwright-report.zip playwright-report
 
        # 🔹 Send summary email
