@@ -105,13 +105,17 @@ jobs:
 
 
 
-      # 🔹 Upload report (for debugging if needed)
+     # 🔹 Upload report (optional – for debugging if needed)
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      # 🔹 Zip the Playwright report
+      - name: Zip Playwright report
+        run: zip -r playwright-report.zip playwright-report
 
       # 🔹 Send summary email
       - name: Send summary email
@@ -145,6 +149,11 @@ jobs:
             Repo: ${{ github.repository }}
             Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            📎  Please see attached for the full HTML report.
-            attachments: "playwright-report/index.html"
+                Playwright test run completed for repository: ${{ github.repository }}.
 
+            Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            Please see attached the full Playwright HTML report (zipped).
+            1. Download and extract the ZIP file.
+            2. Open `index.html` inside `playwright-report/` in your browser.
+          attachments: playwright-report.zip
