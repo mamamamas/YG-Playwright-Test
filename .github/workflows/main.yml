@@ -37,7 +37,9 @@ jobs:
       # 🔹 Run tests with JSON reporter
       - name: Run Playwright tests
         run: |
-          npx playwright test --reporter=json > results.json
+          npx playwright test --reporter=html,json --reporter-options json=results.json
+        continue-on-error: true
+
 
 
 
@@ -49,7 +51,7 @@ jobs:
           failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' results.json)
           skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' results.json)
 
-          # Passed test titles
+           # Passed test titles
           passed_tests=$(jq -r '
             [.. | .specs? // empty | .[] 
               | select(any(.tests[].results[]?.status; . == "passed")) 
