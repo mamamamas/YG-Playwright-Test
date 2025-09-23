@@ -128,40 +128,45 @@ jobs:
           to: markchristiandurana75@gmail.com, jennydurana@gmail.com
           from: Playwright CI <mcdurana@jlabs.team>
           body: |
-              Playwright test run completed for repository **${{ github.event.repository.name }}**.
+            Playwright test run completed for repository **${{ github.event.repository.name }}**.
 
-              Test Results:
-              -------------------------------------------------------------------
-              ${{ steps.collect_reports.outputs.results }}
-              -------------------------------------------------------------------
+            Test Results:
+            -------------------------------------------------------------------
+            ✅ Passed: ${{ env.PASSED }}
+            ❌ Failed: ${{ env.FAILED }}
+            ⚠️ Skipped: ${{ env.SKIPPED }}
 
-              For more details, please see the attached HTML report files.
+            ✅ Passed Tests:
+            ${{ env.PASSED_TESTS }}
 
-              -------------------------------------------------------------------
-              📑 Instructions for opening the Playwright HTML report:
-              1. Download the attached .html report file(s) to your local computer.
-              2. Do not open the HTML file directly from your email client, as this may block scripts and resources required for the report.
-              3. Open your file explorer (Finder on macOS or Explorer on Windows) and locate the downloaded HTML file.
-              4. Right-click the file and select "Open with" → choose Chrome, Edge, Firefox, or Safari.
-              5. The report will open in your browser with full interactivity (navigation, filtering, trace viewing).
-              - If the report appears blank, make sure you’re opening it from your file system, not inside your email client or a cloud preview.
+            ❌ Failed Tests:
+            ${{ env.FAILED_TESTS }}
 
-              -------------------------------------------------------------------
-              🕵️ Instructions for viewing Playwright trace files:
-              1. Download the workflow artifact named **playwright-all-reports** from this run:
-                ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-              2. Extract the ZIP file and locate the `test-results` folder inside each suite directory.
-              3. Inside, you’ll find files like `trace-<hash>.zip` for each test.
-              4. Open https://trace.playwright.dev in your browser.
-              5. Drag and drop a trace file into the viewer to inspect actions, steps, and screenshots.
+            ⚠️ Skipped Tests:
+            ${{ env.SKIPPED_TESTS }}
+            -------------------------------------------------------------------
 
-              Notes:
-              - Multiple trace files can be opened one by one.
-              - Traces are not attached to this email due to size, but they’re in the workflow artifact.
+            For more details, please see the attached HTML report files.
 
-              -------------------------------------------------------------------
-              Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            -------------------------------------------------------------------
+            📑 Instructions for opening the Playwright HTML report:
+            1. Download the attached `playwright-report.zip`.
+            2. Extract the ZIP file.
+            3. Open `index.html` in your browser (Chrome, Edge, Firefox, or Safari).
+            - If the report appears blank, make sure you’re opening it from your file system, not inside your email client or a cloud preview.
 
-              This email was sent automatically by GitHub Actions.
+            -------------------------------------------------------------------
+            🕵️ Instructions for viewing Playwright trace files:
+            1. Download the workflow artifact named **playwright-all-reports** from this run:
+              ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            2. Extract the ZIP file and locate the `test-results` folder.
+            3. Inside, you’ll find `trace-<hash>.zip` files for each test.
+            4. Open https://trace.playwright.dev in your browser.
+            5. Drag and drop a trace file into the viewer to inspect actions, steps, and screenshots.
 
-              attachments: "playwright-report/index.html"
+            -------------------------------------------------------------------
+            Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            This email was sent automatically by GitHub Actions.
+
+            attachments: "playwright-report.zip"
