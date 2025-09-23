@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 // import dotenv from 'dotenv';
 // dotenv.config();
-test('Change Log', async ({ page }) => {
+test('ChangeLog', async ({ page }) => {
     await page.goto("https://staging-v2.yearglance.com/");
     await page.locator('.offcanvas-backdrop').click();
     await page.getByRole('listitem').filter({ hasText: 'Loading...Account' }).getByRole('button').click();

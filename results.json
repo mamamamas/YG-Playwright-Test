@@ -10,9 +10,7 @@
     "grep": {},
     "grepInvert": null,
     "maxFailures": 0,
-    "metadata": {
-      "actualWorkers": 1
-    },
+    "metadata": {},
     "preserveOutput": "always",
     "reporter": [
       [
@@ -39,9 +37,7 @@
         "outputDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 1
-        },
+        "metadata": {},
         "id": "setup",
         "name": "setup",
         "testDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/tests",
@@ -55,9 +51,7 @@
         "outputDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 1
-        },
+        "metadata": {},
         "id": "behind-login",
         "name": "behind-login",
         "testDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/tests",
@@ -75,9 +69,7 @@
         "outputDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/test-results",
         "repeatEach": 1,
         "retries": 0,
-        "metadata": {
-          "actualWorkers": 1
-        },
+        "metadata": {},
         "id": "public",
         "name": "public",
         "testDir": "C:/Users/Mark/OneDrive/Desktop/Automation YG/tests",
@@ -97,101 +89,17 @@
     "workers": 1,
     "webServer": null
   },
-  "suites": [
+  "suites": [],
+  "errors": [
     {
-      "title": "login.setup.ts",
-      "file": "login.setup.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "Write login session data",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 45000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "setup",
-              "projectName": "setup",
-              "results": [
-                {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 16608,
-                  "errors": [],
-                  "stdout": [
-                    {
-                      "text": "First password failed, retrying with backup...\n"
-                    }
-                  ],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2025-09-23T08:51:51.145Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "deed6908e1ee4c16d23d-5c1432ad15ab034cac4b",
-          "file": "login.setup.ts",
-          "line": 4,
-          "column": 6
-        }
-      ]
-    },
-    {
-      "title": "Account Settings\\ChangeLog.spec.js",
-      "file": "Account Settings/ChangeLog.spec.js",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "Change Log",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 45000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "behind-login",
-              "projectName": "behind-login",
-              "results": [
-                {
-                  "workerIndex": 1,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 21587,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2025-09-23T08:52:10.899Z",
-                  "annotations": [],
-                  "attachments": []
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "9e1fffabc3bfa0d4c55c-e0a8f5b5ec584ed9ad36",
-          "file": "Account Settings/ChangeLog.spec.js",
-          "line": 4,
-          "column": 5
-        }
-      ]
+      "message": "Error: No tests found",
+      "stack": "Error: No tests found"
     }
   ],
-  "errors": [],
   "stats": {
-    "startTime": "2025-09-23T08:51:47.553Z",
-    "duration": 45470.609,
-    "expected": 2,
+    "startTime": "2025-09-23T08:53:01.049Z",
+    "duration": 315.8600000000001,
+    "expected": 0,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
