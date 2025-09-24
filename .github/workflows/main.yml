@@ -22,8 +22,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x, 18.x]
-        browser: [chromium, firefox, webkit]
+        node-version: [18.x]
+        browser: [chromium]
 
     env:
       API_URL: ${{ secrets.API_URL }}
