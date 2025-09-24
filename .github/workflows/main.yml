@@ -1,4 +1,4 @@
-name: YG Playwright CI
+name: YG Playwright CI 
 
 on:
   push:
@@ -7,8 +7,9 @@ on:
     branches: [ main, master ]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+        group: ${{ github.workflow }}-${{ github.ref }}
+        cancel-in-progress: true
+
 
 jobs:
   test:
@@ -53,23 +54,23 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests (sharded)
-        run: npx playwright test --reporter=json,html --shard=${{ matrix.shard }}/3 --output=results-${{ matrix.shard }}.json
+        run: npx playwright test --reporter=json,html --shard=${{ matrix.shard }}/3
         continue-on-error: true
 
-      - name: Zip Playwright HTML report
+      - name: Zip Playwright HTML report (if exists)
         run: |
           if [ -d "playwright-report" ]; then
-            zip -r playwright-report-${{ matrix.shard }}.zip playwright-report
+            zip -r playwright-report.zip playwright-report
           else
             echo "No report to zip."
           fi
 
-      - name: Upload zipped HTML report
+      - name: Upload HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ matrix.shard }}
-          path: playwright-report-${{ matrix.shard }}.zip
+          name: playwright-html-report-${{ matrix.shard }}
+          path: playwright-report/
           retention-days: 30
 
       - name: Upload trace files
@@ -80,38 +81,69 @@ jobs:
           path: test-results/
           retention-days: 30
 
+      - name: Check workspace contents
+        run: ls -la
+
+      # 🔹 Parse test summary + test titles
       - name: Parse test summary
         id: summary
         run: |
-          passed=$(jq '[.. | .results? // empty | .[] | select(.status=="passed")] | length' results-${{ matrix.shard }}.json)
-          failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' results-${{ matrix.shard }}.json)
-          skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' results-${{ matrix.shard }}.json)
+          passed=$(jq '[.. | .results? // empty | .[] | select(.status=="passed")] | length' results.json)
+          failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' results.json)
+          skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' results.json)
 
-          passed_tests=$(jq -r '[.. | .specs? // empty | .[] | select(any(.tests[].results[]?.status; . == "passed")) | .title] | .[]' results-${{ matrix.shard }}.json)
-          failed_tests=$(jq -r '[.. | .specs? // empty | .[] | select(any(.tests[].results[]?.status; . == "failed")) | .title] | .[]' results-${{ matrix.shard }}.json)
-          skipped_tests=$(jq -r '[.. | .specs? // empty | .[] | select(any(.tests[].results[]?.status; . == "skipped")) | .title] | .[]' results-${{ matrix.shard }}.json)
+           # Passed test titles
+          passed_tests=$(jq -r '
+            [.. | .specs? // empty | .[] 
+              | select(any(.tests[].results[]?.status; . == "passed")) 
+              | .title] 
+            | .[]
+          ' results.json)
 
+          # Failed test titles
+          failed_tests=$(jq -r '
+            [.. | .specs? // empty | .[] 
+              | select(any(.tests[].results[]?.status; . == "failed")) 
+              | .title] 
+            | .[]
+          ' results.json)
+
+          # Skipped test titles
+          skipped_tests=$(jq -r '
+            [.. | .specs? // empty | .[] 
+              | select(any(.tests[].results[]?.status; . == "skipped")) 
+              | .title] 
+            | .[]
+          ' results.json)
+
+          echo "✅ Passed: $passed"
+          echo "❌ Failed: $failed"
+          echo "⚠️ Skipped: $skipped"
+
+          # Handle "None" cases
           if [ -z "$passed_tests" ]; then passed_tests="None"; fi
           if [ -z "$failed_tests" ]; then failed_tests="None"; fi
           if [ -z "$skipped_tests" ]; then skipped_tests="None"; fi
 
-          {
-            echo "PASSED=$passed"
-            echo "FAILED=$failed"
-            echo "SKIPPED=$skipped"
+          # Export to env for email step
+                {
+          echo "PASSED=$passed"
+          echo "FAILED=$failed"
+          echo "SKIPPED=$skipped"
 
-            echo "PASSED_TESTS<<EOF"
-            echo "$passed_tests"
-            echo "EOF"
+          echo "PASSED_TESTS<<EOF"
+          echo "$passed_tests"
+          echo "EOF"
 
-            echo "FAILED_TESTS<<EOF"
-            echo "$failed_tests"
-            echo "EOF"
+          echo "FAILED_TESTS<<EOF"
+          echo "$failed_tests"
+          echo "EOF"
 
-            echo "SKIPPED_TESTS<<EOF"
-            echo "$skipped_tests"
-            echo "EOF"
+          echo "SKIPPED_TESTS<<EOF"
+          echo "$skipped_tests"
+          echo "EOF"
           } >> $GITHUB_ENV
+
 
       - name: Add summary to GitHub UI
         if: always()
@@ -124,59 +156,56 @@ jobs:
       - name: Fail job if tests failed
         if: ${{ env.FAILED != '0' }}
         run: exit 1
+
   notify:
-      name: Send Results via Email
-      needs: test
-      runs-on: ubuntu-latest
-      if: always()
-      steps:
-        - name: Download zipped report
-          uses: actions/download-artifact@v4
-          with:
-            name: playwright-report-1
+    name: Send Results via Email
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Download HTML report
+        uses: actions/download-artifact@v4
+        with:
+          name: playwright-html-report-1
 
-        - name: Rename zip to .txt to bypass Gmail block
-          run: mv playwright-report-1.zip playwright-report-1.txt
+      - name: Send summary email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.GOOGLE_EMAIL }}
+          password: ${{ secrets.GOOGLE_PASSWORD }}
+          subject: "Test Results for ${{ github.repository }}"
+          to: markchristiandurana75@gmail.com
+          from: Playwright CI <mcdurana@jlabs.team>
+          body: |
+            Playwright test run completed for repository **${{ github.event.repository.name }}**.
 
+            ## Test Results:
+            ------------------------------------------
+            ✅ Passed: ${{ env.PASSED }}
+            ❌ Failed: ${{ env.FAILED }}
+            ⚠️ Skipped: ${{ env.SKIPPED }}
 
-        - name: Send summary email
-          uses: dawidd6/action-send-mail@v3
-          with:
-              server_address: smtp.gmail.com
-              server_port: 465
-              username: ${{ secrets.GOOGLE_EMAIL }}
-              password: ${{ secrets.GOOGLE_PASSWORD }}
-              subject: "Test Results for ${{ github.repository }}"
-              to: markchristiandurana75@gmail.com
-              from: Playwright CI <mcdurana@jlabs.team>
-              body: |
-                Playwright test run completed for repository **${{ github.event.repository.name }}**.
+            ✅ Passed Tests:
+            ${{ env.PASSED_TESTS }}
 
-                ## Test Results:
-                ------------------------------------------
-                ✅ Passed: ${{ env.PASSED }}
-                ❌ Failed: ${{ env.FAILED }}
-                ⚠️ Skipped: ${{ env.SKIPPED }}
+            ❌ Failed Tests:
+            ${{ env.FAILED_TESTS }}
 
-                ✅ Passed Tests:
-                ${{ env.PASSED_TESTS }}
+            ⚠️ Skipped Tests:
+            ${{ env.SKIPPED_TESTS }}
+            ------------------------------------------
 
-                ❌ Failed Tests:
-                ${{ env.FAILED_TESTS }}
+            💡 To view the Playwright HTML report:
+            1. Download the attached `playwright-report.zip`.
+            2. Extract it and open `index.html` in a browser.
 
-                ⚠️ Skipped Tests:
-                ${{ env.SKIPPED_TESTS }}
-                ------------------------------------------
+            🧪 To inspect Playwright traces:
+            1. Download trace artifacts from:
+               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            2. Open https://trace.playwright.dev and drag & drop trace zip files.
 
-                💡 To view the Playwright HTML report:
-                1. Download the attached `playwright-report-1.zip`.
-                2. Extract it and open `index.html` in a browser.
+            📎 Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-                🧪 To inspect Playwright traces:
-                1. Download trace artifacts from:
-                  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-                2. Open https://trace.playwright.dev and drag & drop trace zip files.
-
-                📎 Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-              attachments: "playwright-report-1.zip"
+          attachments: "playwright-html-report-1.zip"
