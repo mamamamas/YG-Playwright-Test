@@ -167,7 +167,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: playwright-html-report-1
-
+          path: playwright-report
+      - name: Zip report before emailing
+        run: zip -r playwright-report.zip playwright-report
       - name: Send summary email
         uses: dawidd6/action-send-mail@v3
         with:
@@ -208,4 +210,4 @@ jobs:
 
             📎 Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-          attachments: "playwright-html-report-1.zip"
+          attachments: "playwright-report.zip"
