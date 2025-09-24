@@ -83,8 +83,7 @@ jobs:
           name: playwright-traces
           path: test-results/
           retention-days: 30
-      - name: Move report to root
-        run: mv playwright-report.zip ${{ github.workspace }}
+      
 
       - name: Parse test summary
         id: summary
@@ -118,6 +117,9 @@ jobs:
             echo "$skipped_tests"
             echo "EOF"
           } >> $GITHUB_ENV
+
+      - name: Confirm report exists
+        run: test -f playwright-report.zip && echo "✅ Report found" || echo "❌ Report missing"
 
       - name: Send summary email
         if: always()
@@ -164,5 +166,5 @@ jobs:
 
             Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            attachments: "playwright-report/playwright-report.zip"
+            attachments: "playwright-report.zip"
 
