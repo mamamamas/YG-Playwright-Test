@@ -23,7 +23,8 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        browser: [chromium]
+        project: [setup, behind-login, public]
+
 
     env:
       API_URL: ${{ secrets.API_URL }}
@@ -61,7 +62,7 @@ jobs:
 
       - name: Run Playwright tests
         run: |
-          npx playwright test --project=${{ matrix.browser }} --reporter=json,html --retries=2 > results.json
+          npx playwright test --project=${{ matrix.project }} --reporter=json,html --retries=2 > results.json
         continue-on-error: false
 
       - name: Zip Playwright HTML report
@@ -125,7 +126,7 @@ jobs:
           username: ${{ secrets.GOOGLE_EMAIL }}
           password: ${{ secrets.GOOGLE_PASSWORD }}
           subject: "Test Results for ${{ github.repository }}"
-          to: markchristiandurana75@gmail.com, roleynes@jlabs.team
+          to: markchristiandurana75@gmail.com
           from: Playwright CI <mcdurana@jlabs.team>
           body: |
             Playwright test run completed for repository **${{ github.event.repository.name }}**.
