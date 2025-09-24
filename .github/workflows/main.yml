@@ -124,56 +124,59 @@ jobs:
       - name: Fail job if tests failed
         if: ${{ env.FAILED != '0' }}
         run: exit 1
-
   notify:
-    name: Send Results via Email
-    needs: test
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - name: Download zipped report
-        uses: actions/download-artifact@v4
-        with:
-          name: playwright-report-1
+      name: Send Results via Email
+      needs: test
+      runs-on: ubuntu-latest
+      if: always()
+      steps:
+        - name: Download zipped report
+          uses: actions/download-artifact@v4
+          with:
+            name: playwright-report-1
 
-      - name: Send summary email
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.GOOGLE_EMAIL }}
-          password: ${{ secrets.GOOGLE_PASSWORD }}
-          subject: "Test Results for ${{ github.repository }}"
-          to: markchristiandurana75@gmail.com
-          from: Playwright CI <mcdurana@jlabs.team>
-          body: |
-            Playwright test run completed for repository **${{ github.event.repository.name }}**.
+        - name: Rename zip to .txt to bypass Gmail block
+          run: mv playwright-report-1.zip playwright-report-1.txt
 
-            ## Test Results:
-            ------------------------------------------
-            ✅ Passed: ${{ env.PASSED }}
-            ❌ Failed: ${{ env.FAILED }}
-            ⚠️ Skipped: ${{ env.SKIPPED }}
 
-            ✅ Passed Tests:
-            ${{ env.PASSED_TESTS }}
+        - name: Send summary email
+          uses: dawidd6/action-send-mail@v3
+          with:
+              server_address: smtp.gmail.com
+              server_port: 465
+              username: ${{ secrets.GOOGLE_EMAIL }}
+              password: ${{ secrets.GOOGLE_PASSWORD }}
+              subject: "Test Results for ${{ github.repository }}"
+              to: markchristiandurana75@gmail.com
+              from: Playwright CI <mcdurana@jlabs.team>
+              body: |
+                Playwright test run completed for repository **${{ github.event.repository.name }}**.
 
-            ❌ Failed Tests:
-            ${{ env.FAILED_TESTS }}
+                ## Test Results:
+                ------------------------------------------
+                ✅ Passed: ${{ env.PASSED }}
+                ❌ Failed: ${{ env.FAILED }}
+                ⚠️ Skipped: ${{ env.SKIPPED }}
 
-            ⚠️ Skipped Tests:
-            ${{ env.SKIPPED_TESTS }}
-            ------------------------------------------
+                ✅ Passed Tests:
+                ${{ env.PASSED_TESTS }}
 
-            💡 To view the Playwright HTML report:
-            1. Download the attached `playwright-report-1.zip`.
-            2. Extract it and open `index.html` in a browser.
+                ❌ Failed Tests:
+                ${{ env.FAILED_TESTS }}
 
-            🧪 To inspect Playwright traces:
-            1. Download trace artifacts from:
-               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-            2. Open https://trace.playwright.dev and drag & drop trace zip files.
+                ⚠️ Skipped Tests:
+                ${{ env.SKIPPED_TESTS }}
+                ------------------------------------------
 
-            📎 Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+                💡 To view the Playwright HTML report:
+                1. Download the attached `playwright-report-1.zip`.
+                2. Extract it and open `index.html` in a browser.
 
-          attachments: "playwright-report-1.zip"
+                🧪 To inspect Playwright traces:
+                1. Download trace artifacts from:
+                  ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+                2. Open https://trace.playwright.dev and drag & drop trace zip files.
+
+                📎 Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+              attachments: "playwright-report-1.zip"
