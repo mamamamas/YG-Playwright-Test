@@ -23,7 +23,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        project: [setup, behind-login, public]
+        project: [behind-login, public]
 
 
     env:
