@@ -1,4 +1,4 @@
-name: Playwright Tests CI
+name: YG Playwright Tests
 
 on:
   push:
@@ -6,22 +6,18 @@ on:
   pull_request:
     branches: [ main, master ]
 
-permissions:
-  contents: read
-  actions: read
-  checks: write
-
 jobs:
   test:
+    name: Run Playwright Tests (${{ matrix.suite }})
+    runs-on: ubuntu-latest
     timeout-minutes: 60
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        node: [18, 20]
-    runs-on: ${{ matrix.os }}
 
-    env:
+    strategy:
+      fail-fast: false # ✅ don’t cancel all jobs if one suite fails
+      matrix:
+        suite: [behind-login, public]
+
+    env: # ✅ inject secrets
       API_URL: ${{ secrets.API_URL }}
       LOGIN_URL: ${{ secrets.LOGIN_URL }}
       REGISTER_URL: ${{ secrets.REGISTER_URL }}
@@ -33,21 +29,12 @@ jobs:
       PASSWORD: ${{ secrets.PASSWORD }}
 
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4.0.3
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
-
-      - name: Cache NPM modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-
-              
+          node-version: lts/*
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -55,105 +42,120 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # Run tests with reporters + capture results
-      - name: Run Playwright tests
-        run: npx playwright test --reporter=line,json --output=test-results
+      # 🔹 Run tests for each suite
+      - name: Run Playwright suite (${{ matrix.suite }})
+        run: |
+          npx playwright test tests/${{ matrix.suite }} \
+            --reporter=json,html \
+            --output=playwright-report/${{ matrix.suite }} \
+            --reporter-options outputFile=results-${{ matrix.suite }}.json
         continue-on-error: true
 
-      # Upload artifacts always (reports + traces)
-      - name: Upload Playwright report
+      # 🔹 Zip HTML report
+      - name: Zip Playwright HTML report
+        run: zip -r playwright-report-${{ matrix.suite }}.zip playwright-report/${{ matrix.suite }}
+
+      # 🔹 Upload per-suite report
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4.3.3
         with:
-          name: playwright-report-${{ matrix.os }}-node${{ matrix.node }}
-          path: playwright-report/
+          name: playwright-report-${{ matrix.suite }}
+          path: |
+            playwright-report/${{ matrix.suite }}
+            playwright-report-${{ matrix.suite }}.zip
           retention-days: 30
 
-      - name: Upload Playwright traces
-        if: always()
-        uses: actions/upload-artifact@v4.3.3
+  # 🔹 Final summary/notification job
+  summary:
+    name: Collect & Send Summary
+    runs-on: ubuntu-latest
+    needs: test
+    if: always() # ✅ run even if tests fail
+
+    steps:
+      - uses: actions/download-artifact@v4
         with:
-          name: playwright-traces-${{ matrix.os }}-node${{ matrix.node }}
-          path: test-results/
-          retention-days: 14
+          path: artifacts
+
+      - name: Merge results.json files
+        run: |
+          jq -s '.' artifacts/**/results-*.json > results.json
+          ls -R artifacts
 
       - name: Parse test summary
         id: summary
         run: |
-          results_file="results.json"
-          if [ ! -f "$results_file" ]; then
-            echo "{}" > $results_file
-          fi
+          passed=$(jq '[.. | .results? // empty | .[] | select(.status=="passed")] | length' results.json)
+          failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' results.json)
+          skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' results.json)
 
-          passed=$(jq '[.. | .results? // empty | .[] | select(.status=="passed")] | length' $results_file)
-          failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' $results_file)
-          skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' $results_file)
-
+          # Passed test titles
           passed_tests=$(jq -r '
             [.. | .specs? // empty | .[] 
               | select(any(.tests[].results[]?.status; . == "passed")) 
-              | .title] | .[]? // empty
-          ' $results_file)
+              | .title] 
+            | .[]' results.json)
 
+          # Failed test titles
           failed_tests=$(jq -r '
             [.. | .specs? // empty | .[] 
               | select(any(.tests[].results[]?.status; . == "failed")) 
-              | .title] | .[]? // empty
-          ' $results_file)
+              | .title] 
+            | .[]' results.json)
 
+          # Skipped test titles
           skipped_tests=$(jq -r '
             [.. | .specs? // empty | .[] 
               | select(any(.tests[].results[]?.status; . == "skipped")) 
-              | .title] | .[]? // empty
-          ' $results_file)
+              | .title] 
+            | .[]' results.json)
+
+          echo "✅ Passed: $passed"
+          echo "❌ Failed: $failed"
+          echo "⚠️ Skipped: $skipped"
 
           if [ -z "$passed_tests" ]; then passed_tests="None"; fi
           if [ -z "$failed_tests" ]; then failed_tests="None"; fi
           if [ -z "$skipped_tests" ]; then skipped_tests="None"; fi
 
-          echo "PASSED=$passed" >> $GITHUB_ENV
-          echo "FAILED=$failed" >> $GITHUB_ENV
-          echo "SKIPPED=$skipped" >> $GITHUB_ENV
-
           {
+          echo "PASSED=$passed"
+          echo "FAILED=$failed"
+          echo "SKIPPED=$skipped"
           echo "PASSED_TESTS<<EOF"
           echo "$passed_tests"
           echo "EOF"
-
           echo "FAILED_TESTS<<EOF"
           echo "$failed_tests"
           echo "EOF"
-
           echo "SKIPPED_TESTS<<EOF"
           echo "$skipped_tests"
           echo "EOF"
           } >> $GITHUB_ENV
 
-      - name: Annotate failed tests
-        if: always()
+      - name: Collect report ZIPs
         run: |
-          while read -r test; do
-            echo "::error title=Playwright Test Failed::$test"
-          done <<< "${{ env.FAILED_TESTS }}"
+          mkdir zipped-reports
+          find artifacts -name "playwright-report-*.zip" -exec cp {} zipped-reports/ \;
+          ls -la zipped-reports
+        shell: bash
 
-      - name: Zip Playwright HTML report
-        if: always()
-        run: zip -r playwright-report.zip playwright-report
-
+      # 🔹 Send summary email with all report attachments
       - name: Send summary email
         if: always()
-        uses: dawidd6/action-send-mail@v3.12.0
+        uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{ secrets.GOOGLE_EMAIL }}
           password: ${{ secrets.GOOGLE_PASSWORD }}
-          subject: "Test Results for ${{ github.repository }} [${{ matrix.os }} - Node ${{ matrix.node }}]"
-          to: markchristiandurana75@gmail.com, roleynes@jlabs.team
+          subject: "Playwright Test Results for ${{ github.repository }}"
+          to: markchristiandurana75@gmail.com
           from: Playwright CI <mcdurana@jlabs.team>
           body: |
             Playwright test run completed for repository **${{ github.event.repository.name }}**.
 
+            Test Results:
             ✅ Passed: ${{ env.PASSED }}
             ❌ Failed: ${{ env.FAILED }}
             ⚠️ Skipped: ${{ env.SKIPPED }}
@@ -167,7 +169,8 @@ jobs:
             ⚠️ Skipped Tests:
             ${{ env.SKIPPED_TESTS }}
 
-            ------------------------------------------------------
-            Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            Attached are the per-suite HTML reports (zipped).
+            Or view them from workflow artifacts:
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            attachments: "playwright-report.zip"
+            attachments: "zipped-reports/*.zip"
