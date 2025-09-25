@@ -52,43 +52,32 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests (${{ matrix.suite }})
-        run: npx playwright test tests/${{ matrix.suite }} --reporter=json,html --output=results
+      - name: Run Playwright tests
+        run: |
+          npx playwright test tests/${{ matrix.suite }} \
+            --reporter=list,json,json-summary \
+            --output=results
         continue-on-error: true
 
-      - name: Parse test summary
-        id: summary
+      - name: Save suite summary
         run: |
-          results_file="results/results.json"
-          if [ ! -f "$results_file" ]; then
-            echo "No results.json found"
-            exit 0
+          mkdir -p summaries
+          echo "## Suite: ${{ matrix.suite }}" > summaries/suite-summary.txt
+          if [ -f results/test-summary.json ]; then
+            passed=$(jq '.stats.expected' results/test-summary.json)
+            failed=$(jq '.stats.unexpected' results/test-summary.json)
+            echo "✅ Passed: $passed" >> summaries/suite-summary.txt
+            echo "❌ Failed: $failed" >> summaries/suite-summary.txt
+          else
+            echo "⚠️ No summary file found" >> summaries/suite-summary.txt
           fi
-
-          passed=$(jq '[.. | .results? // empty | .[] | select(.status=="passed")] | length' $results_file)
-          failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' $results_file)
-          skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' $results_file)
-
-          echo "PASSED=$passed" >> $GITHUB_ENV
-          echo "FAILED=$failed" >> $GITHUB_ENV
-          echo "SKIPPED=$skipped" >> $GITHUB_ENV
-
-          # save per-suite summary into a file for notify job
-          echo "${{ matrix.suite }}: ✅ $passed | ❌ $failed | ⚠️ $skipped" >> suite-summary.txt
+        shell: bash
 
       - name: Upload suite summary
         uses: actions/upload-artifact@v4
         with:
           name: summary-${{ matrix.suite }}
-          path: suite-summary.txt
-
-      - name: Zip Playwright HTML report
-        run: |
-          if [ -d "playwright-report" ]; then
-            zip -r playwright-report-${{ matrix.suite }}.zip playwright-report
-          else
-            echo "No report to zip."
-          fi
+          path: summaries/suite-summary.txt
 
       - name: Upload HTML report
         if: always()
@@ -107,33 +96,41 @@ jobs:
           retention-days: 30
 
   notify:
-    name: Send Results via Email
-    needs: test
+    needs: test   # ✅ wait for all matrix jobs to finish
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - name: Download all summaries
-        uses: actions/download-artifact@v4
-        with:
-          path: summaries
-
-      - name: Combine summaries
-        run: |
-          echo "## ✅ Playwright Test Results" > full-summary.txt
-          cat summaries/**/suite-summary.txt >> full-summary.txt
-          echo "" >> full-summary.txt
-
-      - name: Download all HTML reports
+      - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: reports
 
-      - name: Re-zip downloaded reports
+      - name: Combine summaries
+        run: |
+          echo "## 📝 Playwright Test Results" > full-summary.txt
+          total_passed=0
+          total_failed=0
+
+          for f in reports/**/suite-summary.txt; do
+            cat "$f" >> full-summary.txt
+            echo "" >> full-summary.txt
+
+            passed=$(grep '✅ Passed:' "$f" | awk '{print $3}')
+            failed=$(grep '❌ Failed:' "$f" | awk '{print $3}')
+            total_passed=$((total_passed + passed))
+            total_failed=$((total_failed + failed))
+          done
+
+          echo "### 📊 Total Results" >> full-summary.txt
+          echo "✅ Passed: $total_passed" >> full-summary.txt
+          echo "❌ Failed: $total_failed" >> full-summary.txt
+        shell: bash
+
+      - name: Zip reports
         run: |
           cd reports
-          for dir in */ ; do
-            zip -r "${dir%/}.zip" "$dir"
-          done
+          zip -r ../playwright.zip .
+        shell: bash
 
       - name: Send summary email
         uses: dawidd6/action-send-mail@v3
@@ -148,8 +145,18 @@ jobs:
           body: |
             Playwright test run completed for repository **${{ github.event.repository.name }}**.
 
-            ${{ steps.combine.outputs }}
-
             📎 Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-          attachments: "reports/*.zip"
+            ------------------------------------------
+            $(cat full-summary.txt)
+            ------------------------------------------
+
+            💡 To view the Playwright HTML report:
+            1. Download the attached `playwright.zip`.
+            2. Extract it and open `index.html` in a browser.
+
+            🧪 To inspect Playwright traces:
+            1. Download trace artifacts from:
+               ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            2. Open https://trace.playwright.dev and drag & drop trace zip files.
+          attachments: "playwright.zip"
