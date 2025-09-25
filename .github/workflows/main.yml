@@ -29,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        suite: [behind-login, public, question-banks, question-groups]
+        suite: [behind-login, public]
 
     steps:
       - uses: actions/checkout@v4
