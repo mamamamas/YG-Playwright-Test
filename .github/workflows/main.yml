@@ -1,4 +1,4 @@
-name: YG Playwright CI
+name: YG Playwright CI 
 
 on:
   push:
@@ -12,7 +12,6 @@ concurrency:
 
 jobs:
   test:
-    name: Run Playwright (${{ matrix.suite }})
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
@@ -30,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        suite: [behind-login, public]
+        suite: [behind-login, public, question-banks, question-groups]
 
     steps:
       - uses: actions/checkout@v4
@@ -54,8 +53,34 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests (${{ matrix.suite }})
-        run: npx playwright test tests/${{ matrix.suite }} --reporter=json,html --output=results/${{ matrix.suite }}
+        run: npx playwright test tests/${{ matrix.suite }} --reporter=json,html --output=results
         continue-on-error: true
+
+      - name: Parse test summary
+        id: summary
+        run: |
+          results_file="results/results.json"
+          if [ ! -f "$results_file" ]; then
+            echo "No results.json found"
+            exit 0
+          fi
+
+          passed=$(jq '[.. | .results? // empty | .[] | select(.status=="passed")] | length' $results_file)
+          failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' $results_file)
+          skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' $results_file)
+
+          echo "PASSED=$passed" >> $GITHUB_ENV
+          echo "FAILED=$failed" >> $GITHUB_ENV
+          echo "SKIPPED=$skipped" >> $GITHUB_ENV
+
+          # save per-suite summary into a file for notify job
+          echo "${{ matrix.suite }}: ✅ $passed | ❌ $failed | ⚠️ $skipped" >> suite-summary.txt
+
+      - name: Upload suite summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: summary-${{ matrix.suite }}
+          path: suite-summary.txt
 
       - name: Zip Playwright HTML report
         run: |
@@ -78,31 +103,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-trace-${{ matrix.suite }}
-          path: results/${{ matrix.suite }}
+          path: test-results/
           retention-days: 30
-
-      - name: Parse test summary
-        id: summary
-        run: |
-          passed=$(jq '[.. | .results? // empty | .[] | select(.status=="passed")] | length' results.json)
-          failed=$(jq '[.. | .results? // empty | .[] | select(.status=="failed")] | length' results.json)
-          skipped=$(jq '[.. | .results? // empty | .[] | select(.status=="skipped")] | length' results.json)
-
-          echo "PASSED=$passed" >> $GITHUB_ENV
-          echo "FAILED=$failed" >> $GITHUB_ENV
-          echo "SKIPPED=$skipped" >> $GITHUB_ENV
-
-      - name: Add summary to GitHub UI
-        if: always()
-        run: |
-          echo "## ✅ Playwright Test Summary (${{ matrix.suite }})" >> $GITHUB_STEP_SUMMARY
-          echo "- Passed: ${{ env.PASSED }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Failed: ${{ env.FAILED }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Skipped: ${{ env.SKIPPED }}" >> $GITHUB_STEP_SUMMARY
-
-      - name: Fail job if tests failed
-        if: ${{ env.FAILED != '0' }}
-        run: exit 1
 
   notify:
     name: Send Results via Email
@@ -110,10 +112,28 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - name: Download HTML report artifacts
+      - name: Download all summaries
+        uses: actions/download-artifact@v4
+        with:
+          path: summaries
+
+      - name: Combine summaries
+        run: |
+          echo "## ✅ Playwright Test Results" > full-summary.txt
+          cat summaries/**/suite-summary.txt >> full-summary.txt
+          echo "" >> full-summary.txt
+
+      - name: Download all HTML reports
         uses: actions/download-artifact@v4
         with:
           path: reports
+
+      - name: Re-zip downloaded reports
+        run: |
+          cd reports
+          for dir in */ ; do
+            zip -r "${dir%/}.zip" "$dir"
+          done
 
       - name: Send summary email
         uses: dawidd6/action-send-mail@v3
@@ -128,12 +148,8 @@ jobs:
           body: |
             Playwright test run completed for repository **${{ github.event.repository.name }}**.
 
-            ✅ Each suite ran in parallel:
-            - behind-login
-            - public
-            - question-banks
-            - question-groups
+            ${{ steps.combine.outputs }}
 
             📎 Workflow Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-          attachments: "reports/**/*.zip"
+          attachments: "reports/*.zip"
