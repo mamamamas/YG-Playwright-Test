@@ -345,7 +345,7 @@ jobs:
           username: ${{ secrets.GOOGLE_EMAIL }}
           password: ${{ secrets.GOOGLE_PASSWORD }}
           subject: "Test Results for ${{ github.repository }}"
-          to: markchristiandurana75@gmail.com
+          to: markchristiandurana75@gmail.com, roleynes@jlabs.team
           from: Playwright CI <mcdurana@jlabs.team>
           body: |
             Playwright test run completed for repository **${{ github.event.repository.name }}**.
